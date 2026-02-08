@@ -6,12 +6,24 @@ const WP_API_BASE = "https://afmef.bj/wp-json/wp/v2";
 
 /**
  * Fetch avec retry et timeout
+ * @param {string} url - URL à requêter
+ * @param {Object} options - Options fetch
+ * @param {number} retries - Nombre de tentatives
+ * @param {string} token - Token JWT optionnel pour authentification
  */
-async function fetchWithRetry(url, options = {}, retries = 3) {
+async function fetchWithRetry(url, options = {}, retries = 3, token = null) {
+    const headers = { ...options.headers };
+
+    // Ajouter le header Authorization si un token est fourni
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+
     for (let i = 0; i < retries; i++) {
         try {
             const response = await fetch(url, {
                 ...options,
+                headers,
                 signal: AbortSignal.timeout(10000), // 10 secondes timeout
             });
             return response;
@@ -25,6 +37,16 @@ async function fetchWithRetry(url, options = {}, retries = 3) {
             await new Promise((resolve) => setTimeout(resolve, 1000));
         }
     }
+}
+
+/**
+ * Fetch authentifié avec token JWT
+ * @param {string} url - URL à requêter
+ * @param {string} token - Token JWT
+ * @param {Object} options - Options fetch additionnelles
+ */
+export async function fetchAuthenticated(url, token, options = {}) {
+    return fetchWithRetry(url, options, 3, token);
 }
 
 /**
@@ -185,11 +207,15 @@ function formatActivite(raw) {
 function decodeHtmlEntities(text) {
     if (!text) return "";
     return text
+        // Entités numériques décimales (&#8211; &#038; etc.)
+        .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(parseInt(code, 10)))
+        // Entités numériques hexadécimales (&#x2013; etc.)
+        .replace(/&#x([0-9A-Fa-f]+);/g, (_, code) => String.fromCharCode(parseInt(code, 16)))
+        // Entités nommées
         .replace(/&amp;/g, "&")
         .replace(/&lt;/g, "<")
         .replace(/&gt;/g, ">")
         .replace(/&quot;/g, '"')
-        .replace(/&#039;/g, "'")
         .replace(/&rsquo;/g, "'")
         .replace(/&lsquo;/g, "'")
         .replace(/&rdquo;/g, '"')
