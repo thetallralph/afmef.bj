@@ -1,0 +1,71 @@
+/* Google Fonts - Must be first */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+@import 'tailwindcss';
+
+/* Tailwind v4 Theme Configuration - Matching afmef.bj live site */
+@theme {
+	/* Primary Green Colors (from live site) */
+	--color-primary: #07873f;
+	--color-primary-light: #15885c;
+	--color-primary-dark: #043218;
+	--color-primary-darker: #021f10;
+	--color-primary-bg: #defceb;
+
+	/* Secondary/Accent Yellow Colors */
+	--color-secondary: #ffd513;
+	--color-secondary-dark: #e6c011;
+
+	/* Accent Blue Color */
+	--color-accent-blue: #046bd2;
+
+	/* Background Colors */
+	--color-bg-light-green: #defceb;
+	--color-bg-light-yellow: #f7ffda;
+
+	/* Neutral Colors */
+	--color-neutral-dark: #1c244b;
+	--color-neutral-slate: #334155;
+	--color-neutral-gray: #949494;
+
+	/* Font families for Tailwind v4 */
+	--font-family-sans: 'Manrope', sans-serif;
+	--font-family-title: 'Outfit', sans-serif;
+	--font-family-body: 'Manrope', sans-serif;
+	--font-family-button: 'Manrope', sans-serif;
+}
+
+body {
+	font-family: 'Manrope', sans-serif;
+	color: #334155;
+	line-height: 1.65;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Outfit', sans-serif;
+	font-weight: 600;
+	line-height: 1.1;
+}
+
+/* Smooth scrolling */
+html {
+	scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--color-primary);
+	border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--color-primary-light);
+}
