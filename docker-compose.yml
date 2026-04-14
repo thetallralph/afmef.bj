@@ -4,6 +4,8 @@ services:
       context: .
       dockerfile: Dockerfile.caddy
     restart: unless-stopped
+    ports:
+      - "3080:80"
     depends_on:
       pocketbase:
         condition: service_healthy
