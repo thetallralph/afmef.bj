@@ -1,12 +1,12 @@
 import PocketBase from 'pocketbase';
-import { POCKETBASE_URL } from '$env/static/private';
-import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
+import { env } from '$env/dynamic/private';
+import { env as publicEnv } from '$env/dynamic/public';
 
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {
 	// Côté serveur : utiliser l'URL interne Docker si disponible,
 	// sinon fallback sur l'URL publique
-	const pb = new PocketBase(POCKETBASE_URL || PUBLIC_POCKETBASE_URL);
+	const pb = new PocketBase(env.POCKETBASE_URL || publicEnv.PUBLIC_POCKETBASE_URL);
 
 	// Charger l'auth depuis le cookie
 	const cookie = event.request.headers.get('cookie') || '';

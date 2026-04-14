@@ -1,7 +1,4 @@
 import { fail, redirect } from '@sveltejs/kit';
-import PocketBase from 'pocketbase';
-import { POCKETBASE_URL } from '$env/static/private';
-import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
 
 export const actions = {
 	default: async ({ request, locals }) => {

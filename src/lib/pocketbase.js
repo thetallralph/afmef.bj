@@ -1,5 +1,5 @@
 import PocketBase from 'pocketbase';
-import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 
 /**
  * Instance singleton pour le client (navigateur)
@@ -12,7 +12,7 @@ export function getClientPB() {
 		throw new Error('getClientPB() ne doit être appelé que côté client');
 	}
 	if (!clientPB) {
-		clientPB = new PocketBase(PUBLIC_POCKETBASE_URL);
+		clientPB = new PocketBase(env.PUBLIC_POCKETBASE_URL);
 	}
 	return clientPB;
 }
