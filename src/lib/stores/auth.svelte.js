@@ -1,34 +1,55 @@
 /**
  * Store d'authentification Svelte 5
- * Gère l'état de connexion utilisateur
+ * Gère l'état de connexion utilisateur via PocketBase
  */
+
+import { getClientPB } from '$lib/pocketbase.js';
+import { formatUser } from '$lib/services/auth.js';
 
 let user = $state(null);
 let isLoading = $state(true);
 let isAuthenticated = $state(false);
 
 /**
- * Initialise l'état d'authentification depuis le serveur
+ * Initialise l'état d'authentification depuis PocketBase
  */
-export async function initAuth() {
-	isLoading = true;
-	try {
-		const response = await fetch('/api/auth/me');
-		if (response.ok) {
-			const data = await response.json();
-			user = data.user;
+export function initAuth() {
+	const pb = getClientPB();
+
+	if (pb.authStore.isValid && pb.authStore.record) {
+		user = formatUser(pb.authStore.record);
+		isAuthenticated = true;
+	} else {
+		user = null;
+		isAuthenticated = false;
+	}
+	isLoading = false;
+
+	// Écouter les changements d'auth
+	pb.authStore.onChange((token, record) => {
+		if (token && record) {
+			user = formatUser(record);
 			isAuthenticated = true;
 		} else {
 			user = null;
 			isAuthenticated = false;
 		}
-	} catch (error) {
-		console.error('Erreur initialisation auth:', error);
+	});
+}
+
+/**
+ * Initialise depuis les données serveur (SSR)
+ * @param {Object|null} serverUser - Données utilisateur du serveur
+ */
+export function initFromServer(serverUser) {
+	if (serverUser) {
+		user = serverUser;
+		isAuthenticated = true;
+	} else {
 		user = null;
 		isAuthenticated = false;
-	} finally {
-		isLoading = false;
 	}
+	isLoading = false;
 }
 
 /**
@@ -40,24 +61,17 @@ export async function initAuth() {
 export async function login(email, password) {
 	isLoading = true;
 	try {
-		const response = await fetch('/api/auth/login', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ email, password })
-		});
-
-		const data = await response.json();
-
-		if (response.ok) {
-			user = data.user;
-			isAuthenticated = true;
-			return { success: true };
-		} else {
-			return { success: false, error: data.error || 'Erreur de connexion' };
-		}
+		const pb = getClientPB();
+		const authData = await pb.collection('users').authWithPassword(email, password);
+		user = formatUser(authData.record);
+		isAuthenticated = true;
+		return { success: true };
 	} catch (error) {
 		console.error('Erreur login:', error);
-		return { success: false, error: 'Erreur réseau. Veuillez réessayer.' };
+		return {
+			success: false,
+			error: error?.response?.message || 'Identifiants incorrects'
+		};
 	} finally {
 		isLoading = false;
 	}
@@ -67,16 +81,12 @@ export async function login(email, password) {
  * Déconnecte l'utilisateur
  */
 export async function logout() {
-	isLoading = true;
-	try {
-		await fetch('/api/auth/logout', { method: 'POST' });
-	} catch (error) {
-		console.error('Erreur logout:', error);
-	} finally {
-		user = null;
-		isAuthenticated = false;
-		isLoading = false;
-	}
+	const pb = getClientPB();
+	pb.authStore.clear();
+	// Effacer le cookie côté serveur
+	await fetch('/api/auth/logout', { method: 'POST' });
+	user = null;
+	isAuthenticated = false;
 }
 
 /**

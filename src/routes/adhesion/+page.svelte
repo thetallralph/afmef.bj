@@ -445,20 +445,20 @@
 			<span class="text-secondary">famille AFMEF</span> ?
 		</h2>
 		<p class="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto">
-			Contactez-nous pour obtenir le formulaire d'adhésion et rejoindre notre communauté de femmes engagées.
+			Créez votre compte en quelques minutes et rejoignez notre communauté de femmes engagées.
 		</p>
 		<div class="flex flex-wrap justify-center gap-4">
-			<a href="/contact" class="group inline-flex items-center gap-2 bg-secondary hover:bg-yellow-400 text-gray-900 font-semibold py-4 px-8 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-secondary/25 hover:-translate-y-0.5">
-				Nous contacter
+			<a href="/espace-membre/inscription" class="group inline-flex items-center gap-2 bg-secondary hover:bg-yellow-400 text-gray-900 font-semibold py-4 px-8 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-secondary/25 hover:-translate-y-0.5">
+				S'inscrire maintenant
 				<svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
 				</svg>
 			</a>
-			<a href="tel:+2290147474707" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold py-4 px-8 rounded-full border border-white/20 transition-all duration-300 hover:-translate-y-0.5">
+			<a href="/espace-membre/connexion" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold py-4 px-8 rounded-full border border-white/20 transition-all duration-300 hover:-translate-y-0.5">
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
 				</svg>
-				Appeler
+				Déjà membre ? Se connecter
 			</a>
 		</div>
 	</div>

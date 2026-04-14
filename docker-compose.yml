@@ -1,0 +1,44 @@
+services:
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      pocketbase:
+        condition: service_healthy
+      app:
+        condition: service_started
+
+  pocketbase:
+    image: ghcr.io/muchobien/pocketbase:latest
+    restart: unless-stopped
+    volumes:
+      - pb_data:/pb/pb_data
+      - pb_migrations:/pb/pb_migrations
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:8090/api/health || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      args:
+        # URL publique : même domaine, Caddy route vers PocketBase
+        PUBLIC_POCKETBASE_URL: https://afmef.bj
+    restart: unless-stopped
+    environment:
+      # URL interne Docker pour les appels serveur
+      - POCKETBASE_URL=http://pocketbase:8090
+      # URL publique pour le build client
+      - PUBLIC_POCKETBASE_URL=https://afmef.bj
+      - NODE_ENV=production
+      - ORIGIN=https://afmef.bj
+
+volumes:
+  pb_data:
+  pb_migrations:

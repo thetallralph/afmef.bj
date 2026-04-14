@@ -1,5 +1,8 @@
 <script>
 	import ProfileForm from '$lib/components/member/ProfileForm.svelte';
+	import { getClientPB } from '$lib/pocketbase.js';
+	import { formatUser } from '$lib/services/auth.js';
+	import { updateUser } from '$lib/stores/auth.svelte.js';
 
 	let { data } = $props();
 
@@ -9,21 +12,20 @@
 		loading = true;
 
 		try {
-			const response = await fetch('/api/auth/me', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(profileData)
+			const pb = getClientPB();
+			const record = await pb.collection('users').update(pb.authStore.record.id, {
+				name: profileData.displayName,
+				phone: profileData.phone,
+				structure: profileData.structure,
+				fonction: profileData.fonction,
+				description: profileData.bio,
+				showEmail: profileData.privacy?.showEmail ?? true,
+				showPhone: profileData.privacy?.showPhone ?? false
 			});
-
-			const result = await response.json();
-
-			if (response.ok) {
-				return { success: true };
-			} else {
-				return { success: false, error: result.error };
-			}
+			updateUser(formatUser(record));
+			return { success: true };
 		} catch (error) {
-			return { success: false, error: 'Erreur réseau' };
+			return { success: false, error: error?.response?.message || 'Erreur réseau' };
 		} finally {
 			loading = false;
 		}

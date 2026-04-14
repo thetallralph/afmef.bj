@@ -1,8 +1,6 @@
 import { json } from '@sveltejs/kit';
 
-export async function POST({ cookies }) {
-	// Supprimer le cookie d'authentification
-	cookies.delete('auth_token', { path: '/' });
-
+export async function POST({ locals }) {
+	locals.pb.authStore.clear();
 	return json({ success: true });
 }

@@ -1,0 +1,21 @@
+:80 {
+	# /admin redirige vers le dashboard PocketBase
+	redir /admin /_/ 302
+
+	# Routes PocketBase : admin UI + API
+	@pocketbase {
+		path /_/*
+		path /api/collections/*
+		path /api/files/*
+		path /api/health
+		path /api/realtime
+		path /api/admins/*
+		path /api/settings/*
+		path /api/logs/*
+		path /api/backups/*
+	}
+	reverse_proxy @pocketbase pocketbase:8090
+
+	# Tout le reste vers SvelteKit
+	reverse_proxy app:3000
+}

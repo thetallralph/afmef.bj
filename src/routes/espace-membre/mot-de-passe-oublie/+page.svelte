@@ -2,7 +2,7 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import Input from '$lib/components/ui/Input.svelte';
 	import Alert from '$lib/components/ui/Alert.svelte';
-	import { requestPasswordReset } from '$lib/services/auth.js';
+	import { getClientPB } from '$lib/pocketbase.js';
 	import { isValidEmail } from '$lib/utils/validators.js';
 
 	let email = $state('');
@@ -26,12 +26,12 @@
 
 		loading = true;
 
-		const result = await requestPasswordReset(email);
-
-		if (result.success) {
+		try {
+			const pb = getClientPB();
+			await pb.collection('users').requestPasswordReset(email);
 			success = true;
-		} else {
-			error = result.error || 'Une erreur est survenue';
+		} catch (err) {
+			error = err?.response?.message || 'Une erreur est survenue';
 		}
 
 		loading = false;

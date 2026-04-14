@@ -18,7 +18,7 @@
 				'Ateliers, conférences et séminaires spécialisés pour renforcer les compétences techniques et transversales des femmes du MEF.',
 				'Nos programmes sont conçus pour répondre aux défis spécifiques rencontrés par les femmes dans leur parcours professionnel au sein du ministère.'
 			],
-			link: '/activite?type=renforcement-de-capacites'
+			link: '/activites?type=renforcement-de-capacites'
 		},
 		{
 			title: 'Actions socio-communautaires',
@@ -26,7 +26,7 @@
 			descriptions: [
 				'Contribuer à soulager à travers des actions sociales, les personnes en situation de précarité et plus spécifiquement les enfants orphelins.'
 			],
-			link: '/activite?type=actions-sociales'
+			link: '/activites?type=actions-sociales'
 		},
 		{
 			title: 'Célébrations',
@@ -35,7 +35,7 @@
 				'Soutenir la vision et l\'engagement du Chef de l\'État pour intensifier la défense des droits des femmes et combattre toutes les manifestations de violence à l\'encontre des femmes.',
 				'Travailler en étroite collaboration avec le Ministre d\'État, Ministre de tutelle pour offrir plus d\'opportunités aux talents féminins.'
 			],
-			link: '/activite?type=celebrations-diverses'
+			link: '/activites?type=celebrations-diverses'
 		},
 		{
 			title: 'Sensibilisation & Communication',
@@ -44,7 +44,7 @@
 				'Organiser au profit des membres, des activités de réjouissance, sportives, cultuelles et touristiques pour favoriser le partage, la solidarité et l\'évasion.',
 				'Célébrer collectivement nos réussites et affronter conjointement les aléas de la vie.'
 			],
-			link: '/activite?type=sensibilisation-communication'
+			link: '/activites?type=sensibilisation-communication'
 		},
 		{
 			title: 'Initiatives diverses',
@@ -53,7 +53,7 @@
 				'Mener des actions sociales et humanitaires en faveur des populations vulnérables, notamment les femmes et les familles dans le besoin.',
 				'Développer des initiatives de proximité permettant de toucher directement les communautés et d\'apporter des solutions concrètes aux problématiques locales.'
 			],
-			link: '/activite?type=autres-initiatives'
+			link: '/activites?type=autres-initiatives'
 		}
 	];
 
@@ -118,23 +118,38 @@
 </svelte:head>
 
 <!-- Hero Section -->
-<section class="relative min-h-screen overflow-hidden bg-primary">
-	<!-- Background image -->
-	<div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('https://afmef.bj/wp-content/uploads/2025/03/Capture-decran-2025-03-12-092700.png');"></div>
+<section class="relative overflow-hidden bg-primary">
+	<!-- Background image - changes with slider -->
+	{#if sliderArticles.length > 0}
+		{#each sliderArticles as article, i}
+			<div
+				class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700"
+				style="background-image: url('{article.image.url}');"
+				class:opacity-100={i === currentSlide}
+				class:opacity-0={i !== currentSlide}
+			></div>
+		{/each}
+	{:else}
+		<div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('https://afmef.bj/wp-content/uploads/2025/03/Capture-decran-2025-03-12-092700.png');"></div>
+	{/if}
 
 	<!-- Green overlay with gradient -->
-	<div class="absolute inset-0 bg-primary/90"></div>
+	<div class="absolute inset-0 bg-primary/85"></div>
+
+	<!-- Grain texture overlay -->
+	<div class="absolute inset-0 opacity-[0.15] pointer-events-none mix-blend-overlay grain-overlay"></div>
+
 	<div class="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-[150px]"></div>
 
 	<!-- Large decorative yellow circle behind slider -->
 	<div class="absolute inset-0 overflow-hidden">
-		<svg class="absolute right-[500px] sm:hidden lg:right-[400px] top-1/2 -translate-y-1/2 w-[1400px] h-[1400px] lg:w-[1600px] lg:h-[1600px] pointer-events-none" viewBox="0 0 1838 1838" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<svg class="absolute right-[500px] hidden sm:block lg:right-[400px] top-1/2 -translate-y-1/2 w-[1400px] h-[1400px] lg:w-[1600px] lg:h-[1600px] pointer-events-none opacity-20" viewBox="0 0 1838 1838" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<circle cx="919" cy="919" r="828.5" stroke="#FDD116" stroke-width="181"></circle>
 		</svg>
 	</div>
 
 	<div class="relative container mx-auto px-4 max-w-[1300px] pt-24 pb-16 md:pt-32 md:pb-24">
-		<div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[calc(100vh-200px)]">
+		<div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 			<!-- Left Content -->
 			<div class="text-white order-2 lg:order-1">
 				<h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-[1.1] tracking-tight">
@@ -166,7 +181,7 @@
 						{#if sliderArticles.length > 0}
 							{#each sliderArticles as article, i}
 								<a
-									href="/activite/{article.slug}"
+									href="/activites/{article.slug}"
 									class="absolute inset-0 transition-all duration-700 ease-out cursor-pointer"
 									class:opacity-100={i === currentSlide}
 									class:opacity-0={i !== currentSlide}
@@ -257,7 +272,7 @@
 			{#if newsArticles.length > 0}
 				{#each newsArticles as article, i}
 					<article class="group bg-gray-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 {isVisible['news-grid'] ? 'animate-fade-in-up' : 'opacity-0'}" style="animation-delay: {i * 100}ms">
-						<a href="/activite/{article.slug}" class="block">
+						<a href="/activites/{article.slug}" class="block">
 							<div class="aspect-[4/3] overflow-hidden relative">
 								{#if article.image?.url}
 									<img src={article.image.url} alt={article.image.alt || article.title} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
@@ -533,6 +548,13 @@
 </section>
 
 <style>
+	/* Grain texture effect */
+	.grain-overlay {
+		background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+		background-repeat: repeat;
+		background-size: 180px 180px;
+	}
+
 	/* Scroll-based marquee */
 	.marquee-container {
 		overflow: hidden;

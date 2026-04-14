@@ -1,0 +1,69 @@
+[
+  {
+    "name": "users",
+    "type": "auth",
+    "comment": "Collection d'authentification - membres AFMEF",
+    "schema": [
+      { "name": "name", "type": "text", "required": true, "comment": "Nom complet" },
+      { "name": "avatar", "type": "file", "comment": "Photo de profil" },
+      { "name": "phone", "type": "text", "comment": "Numéro de téléphone" },
+      { "name": "structure", "type": "text", "comment": "Organisation / Structure" },
+      { "name": "fonction", "type": "text", "comment": "Poste / Fonction" },
+      { "name": "description", "type": "text", "comment": "Biographie" },
+      { "name": "showEmail", "type": "bool", "comment": "Afficher l'email dans l'annuaire" },
+      { "name": "showPhone", "type": "bool", "comment": "Afficher le téléphone dans l'annuaire" },
+      { "name": "showInDirectory", "type": "bool", "comment": "Apparaître dans l'annuaire" },
+      { "name": "role", "type": "select", "options": { "values": ["member", "admin"] }, "comment": "Rôle : member ou admin" },
+      { "name": "status", "type": "select", "options": { "values": ["active", "inactive"] }, "comment": "Statut du compte" }
+    ]
+  },
+  {
+    "name": "events",
+    "type": "base",
+    "comment": "Événements réservés aux membres",
+    "schema": [
+      { "name": "title", "type": "text", "required": true },
+      { "name": "slug", "type": "text", "required": true },
+      { "name": "description", "type": "editor" },
+      { "name": "date", "type": "date", "required": true },
+      { "name": "endDate", "type": "date" },
+      { "name": "location", "type": "text" },
+      { "name": "image", "type": "file" },
+      { "name": "maxParticipants", "type": "number" }
+    ]
+  },
+  {
+    "name": "event_registrations",
+    "type": "base",
+    "comment": "Inscriptions aux événements",
+    "schema": [
+      { "name": "event", "type": "relation", "required": true, "options": { "collectionId": "events" } },
+      { "name": "user", "type": "relation", "required": true, "options": { "collectionId": "users" } },
+      { "name": "registeredAt", "type": "autodate" }
+    ]
+  },
+  {
+    "name": "cotisations",
+    "type": "base",
+    "comment": "Cotisations annuelles des membres",
+    "schema": [
+      { "name": "user", "type": "relation", "required": true, "options": { "collectionId": "users" } },
+      { "name": "year", "type": "number", "required": true },
+      { "name": "amount", "type": "number", "required": true },
+      { "name": "status", "type": "select", "options": { "values": ["pending", "paid"] } },
+      { "name": "paidAt", "type": "date" },
+      { "name": "method", "type": "select", "options": { "values": ["mobile_money", "virement", "especes"] } }
+    ]
+  },
+  {
+    "name": "documents",
+    "type": "base",
+    "comment": "Documents partagés avec les membres",
+    "schema": [
+      { "name": "title", "type": "text", "required": true },
+      { "name": "description", "type": "text" },
+      { "name": "file", "type": "file", "required": true },
+      { "name": "category", "type": "select", "options": { "values": ["rapport", "pv", "formation", "autre"] } }
+    ]
+  }
+]

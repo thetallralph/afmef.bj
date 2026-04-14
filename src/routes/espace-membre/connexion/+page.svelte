@@ -110,8 +110,8 @@
 			<div class="mt-6 text-center">
 				<p class="text-gray-600 text-sm">
 					Pas encore membre ?
-					<a href="/adhesion" class="text-primary font-medium hover:underline">
-						Rejoignez-nous
+					<a href="/espace-membre/inscription" class="text-primary font-medium hover:underline">
+						Créer un compte
 					</a>
 				</p>
 			</div>
