@@ -2,19 +2,19 @@
 	# /admin redirige vers le dashboard PocketBase
 	redir /admin /_/ 302
 
-	# Routes PocketBase : admin UI + API
-	@pocketbase {
+	# Dashboard PocketBase
+	@pbui {
 		path /_/*
-		path /api/collections/*
-		path /api/files/*
-		path /api/health
-		path /api/realtime
-		path /api/admins/*
-		path /api/settings/*
-		path /api/logs/*
-		path /api/backups/*
+		path /_
 	}
-	reverse_proxy @pocketbase pocketbase:8090
+	reverse_proxy @pbui pocketbase:8090
+
+	# API PocketBase (tout /api/ sauf /api/auth/ qui est SvelteKit)
+	@pbapi {
+		path /api/*
+		not path /api/auth/*
+	}
+	reverse_proxy @pbapi pocketbase:8090
 
 	# Tout le reste vers SvelteKit
 	reverse_proxy app:3000
