@@ -65,7 +65,7 @@
 				<div class="relative">
 					<div class="absolute -inset-8 bg-gradient-to-br from-primary/10 via-secondary/10 to-red-100 rounded-full blur-2xl"></div>
 					<img
-						src="https://afmef.bj/wp-content/uploads/2024/03/image.png"
+						src="/images/wp/logo-histoire.png"
 						alt="Logo AFMEF"
 						class="relative w-full max-w-md"
 					/>

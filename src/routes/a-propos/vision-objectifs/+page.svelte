@@ -57,7 +57,7 @@
 			<!-- Left - Sticky Image -->
 			<div class="lg:sticky lg:top-24 flex-shrink-0">
 				<img
-					src="https://afmef.bj/wp-content/uploads/2025/03/objectif-image.png"
+					src="/images/wp/objectif-image.png"
 					alt="Objectifs AFMEF"
 					class="w-[420px] max-h-[600px] object-cover object-top rounded-t-2xl rounded-b-full {isVisible['objectives-grid'] ? 'animate-fade-in' : 'opacity-0'}"
 				/>

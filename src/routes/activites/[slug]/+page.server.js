@@ -1,4 +1,4 @@
-import { getActiviteBySlug, getActivites } from '$lib/services/wordpress';
+import { getActiviteBySlug, getActivites } from '$lib/services/pocketbase-content';
 import { error } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
@@ -16,7 +16,7 @@ export async function load({ params }) {
 	if (activite.types.length > 0) {
 		const { activites } = await getActivites({
 			perPage: 4,
-			typeActivite: activite.types[0].id
+			typeActivite: activite.types[0].slug
 		});
 		// Exclure l'activité actuelle
 		activitesConnexes = activites.filter((a) => a.id !== activite.id).slice(0, 3);

@@ -5,28 +5,28 @@
 	let isVisible = $state({});
 
 	const bureauExecutif = [
-		{ role: "Présidente", name: "AKOTO OKRY Vicentia", image: "https://afmef.bj/wp-content/uploads/2025/11/0R7A0246-683x1024.jpg" },
-		{ role: "1ère Vice-Présidente", name: "HONONTA HOUSSOU Eudoxie", image: "https://afmef.bj/wp-content/uploads/elementor/thumbs/R40-scaled-reyd20ae17wuhc3mqlrzhc8h5tk0uxul8vtmwl1qxs.jpg" },
+		{ role: "Présidente", name: "AKOTO OKRY Vicentia", image: "/images/wp/equipe-presidente.jpg" },
+		{ role: "1ère Vice-Présidente", name: "HONONTA HOUSSOU Eudoxie", image: "/images/wp/equipe-vp1.jpg" },
 		{ role: "2ème Vice-Présidente", name: "BERAUD Rose Abeni", image: null },
-		{ role: "Secrétaire Générale", name: "SAMON Nassiratou", image: "https://afmef.bj/wp-content/uploads/elementor/thumbs/R125-scaled-reycnsy6rcgv1gqdogqxsx9q07kcjlglykxhu23wyo.jpg" },
-		{ role: "Trésorière Générale", name: "DJEDOU Eudoxie", image: "https://afmef.bj/wp-content/uploads/elementor/thumbs/R109-scaled-reyczi1vt4hbirqpdirstz084twsbzwcwh70u0rjj4.jpg" },
-		{ role: "Organisatrice Générale", name: "DJENGUE Elodie", image: "https://afmef.bj/wp-content/uploads/elementor/thumbs/R113-scaled-reycsqlon181zrkbv3jfe6fua18pye1vn089jcsiao.jpg" },
-		{ role: "Secrétaire Générale Adjointe", name: "VODOUHE Mariquess", image: "https://afmef.bj/wp-content/uploads/elementor/thumbs/R123-scaled-reycs9ol80kw6s8wlw855apjl3k43u6pkohiwdhleo.jpg" },
+		{ role: "Secrétaire Générale", name: "SAMON Nassiratou", image: "/images/wp/equipe-sg.jpg" },
+		{ role: "Trésorière Générale", name: "DJEDOU Eudoxie", image: "/images/wp/equipe-tresoriere.jpg" },
+		{ role: "Organisatrice Générale", name: "DJENGUE Elodie", image: "/images/wp/equipe-organisatrice.jpg" },
+		{ role: "Secrétaire Générale Adjointe", name: "VODOUHE Mariquess", image: "/images/wp/equipe-sg-adj.jpg" },
 		{ role: "Trésorière Générale Adjointe", name: "KPANOU KIKI Justine", image: null },
-		{ role: "1ère Organisatrice Générale Adjointe", name: "AGOSSOU Laurentine", image: "https://afmef.bj/wp-content/uploads/elementor/thumbs/R129-scaled-reyde2jtqofbh6kuathmhanflu3ln3qkwl7ymf5v34.jpg" },
-		{ role: "2ème Organisatrice Générale Adjointe", name: "HONVO HOUNKPE Rose", image: "https://afmef.bj/wp-content/uploads/elementor/thumbs/R132-scaled-reydm7tgyzks3iquqc9838n8y1y4co2u0wrgcr315s.jpg" },
+		{ role: "1ère Organisatrice Générale Adjointe", name: "AGOSSOU Laurentine", image: "/images/wp/equipe-org-adj1.jpg" },
+		{ role: "2ème Organisatrice Générale Adjointe", name: "HONVO HOUNKPE Rose", image: "/images/wp/equipe-org-adj2.jpg" },
 		{ role: "1ère Responsable chargée de la mobilisation", name: "BABABONI Adidjatou", image: null },
 		{ role: "2ème Responsable chargée de la mobilisation", name: "AHOUANDOGBO Elode", image: null },
-		{ role: "Secrétaire aux Affaires Culturelles et Sportives", name: "MINANON HESSA Rosalie", image: "https://afmef.bj/wp-content/uploads/elementor/thumbs/R26-scaled-reydfhb3zqcsw4j42ffh7xubon5f6rc33kg6jd2lr4.jpg" },
+		{ role: "Secrétaire aux Affaires Culturelles et Sportives", name: "MINANON HESSA Rosalie", image: "/images/wp/equipe-culture.jpg" },
 		{ role: "Secrétaire Adjointe aux Affaires Culturelles et Sportives", name: "ASSABA Gisèle", image: null },
-		{ role: "Secrétaire à la Formation, au Genre et à l'Autonomisation des Femmes", name: "CASSA Meyrine", image: "https://afmef.bj/wp-content/uploads/elementor/thumbs/R73-scaled-reydejgx5p2ha5w9k0swq6dqars7hnlqywyp9egrz4.jpg" },
+		{ role: "Secrétaire à la Formation, au Genre et à l'Autonomisation des Femmes", name: "CASSA Meyrine", image: "/images/wp/equipe-formation.jpg" },
 		{ role: "Secrétaire Adjointe à la Formation, au Genre et à l'Autonomisation des Femmes", name: "ATTINKPAHOUN Isabelle", image: null },
-		{ role: "Conseillère Juridique", name: "AZONDEKON Isabelle", image: "https://afmef.bj/wp-content/uploads/elementor/thumbs/R149-scaled-reydmnsq766nkw3n515vrmm31lrcziu9r3upigfc80.jpg" }
+		{ role: "Conseillère Juridique", name: "AZONDEKON Isabelle", image: "/images/wp/equipe-juridique.jpg" }
 	];
 
 	const commissaires = [
-		{ role: "1ère Commissaire aux Comptes", name: "KUADJO Christiane", image: "https://afmef.bj/wp-content/uploads/elementor/thumbs/R130-scaled-reyctqbjuqky8y4g2iz90xfcuoco2vzofx0prvbjq8.jpg" },
-		{ role: "2ème Commissaire aux Comptes", name: "HOUESSOU Leslie", image: "https://afmef.bj/wp-content/uploads/elementor/thumbs/R35-scaled-reydf29oyds7qd4yi8xg41my6h7jrlodpi0euxowio.jpg" },
+		{ role: "1ère Commissaire aux Comptes", name: "KUADJO Christiane", image: "/images/wp/equipe-commissaire1.jpg" },
+		{ role: "2ème Commissaire aux Comptes", name: "HOUESSOU Leslie", image: "/images/wp/equipe-commissaire2.jpg" },
 		{ role: "3ème Commissaire aux Comptes", name: "AHOUNOU Castelle", image: null }
 	];
 

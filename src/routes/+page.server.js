@@ -1,4 +1,4 @@
-import { getActivites } from '$lib/services/wordpress';
+import { getActivites } from '$lib/services/pocketbase-content';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {

@@ -1,7 +1,7 @@
 <script>
 	import { onMount, onDestroy } from 'svelte';
 	import { page } from '$app/stores';
-	import { getActivites, getTypesActivites } from '$lib/services/wordpress.js';
+	import { getActivites, getTypesActivites } from '$lib/services/pocketbase-content.js';
 
 	// État de chargement
 	let isLoading = $state(true);
@@ -38,14 +38,8 @@
 			// Charger les types d'activités
 			typesActivites = await getTypesActivites();
 
-			// Trouver l'ID du type si un slug est spécifié
-			let typeActivite = null;
-			if (currentTypeSlug) {
-				const type = typesActivites.find((t) => t.slug === currentTypeSlug);
-				if (type) {
-					typeActivite = type.id;
-				}
-			}
+			// Utiliser le slug directement pour filtrer par type
+			let typeActivite = currentTypeSlug || null;
 
 			// Charger les activités avec le filtre
 			const activitesData = await getActivites({

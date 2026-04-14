@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { getRessources } from '$lib/services/wordpress.js';
+	import { getRessources } from '$lib/services/pocketbase-content.js';
 
 	// État de chargement
 	let isLoading = $state(true);

@@ -13,7 +13,7 @@
 	const activities = [
 		{
 			title: 'Renforcement de capacités',
-			image: 'https://afmef.bj/wp-content/uploads/2025/11/5D3_0067-1024x606.jpg',
+			image: '/images/wp/activite-renforcement.jpg',
 			descriptions: [
 				'Ateliers, conférences et séminaires spécialisés pour renforcer les compétences techniques et transversales des femmes du MEF.',
 				'Nos programmes sont conçus pour répondre aux défis spécifiques rencontrés par les femmes dans leur parcours professionnel au sein du ministère.'
@@ -22,7 +22,7 @@
 		},
 		{
 			title: 'Actions socio-communautaires',
-			image: 'https://afmef.bj/wp-content/uploads/2025/11/0R7A9304-1024x683.jpg',
+			image: '/images/wp/activite-actions-sociales.jpg',
 			descriptions: [
 				'Contribuer à soulager à travers des actions sociales, les personnes en situation de précarité et plus spécifiquement les enfants orphelins.'
 			],
@@ -30,7 +30,7 @@
 		},
 		{
 			title: 'Célébrations',
-			image: 'https://afmef.bj/wp-content/uploads/2025/11/031A5390-1024x683.jpg',
+			image: '/images/wp/activite-celebrations.jpg',
 			descriptions: [
 				'Soutenir la vision et l\'engagement du Chef de l\'État pour intensifier la défense des droits des femmes et combattre toutes les manifestations de violence à l\'encontre des femmes.',
 				'Travailler en étroite collaboration avec le Ministre d\'État, Ministre de tutelle pour offrir plus d\'opportunités aux talents féminins.'
@@ -39,7 +39,7 @@
 		},
 		{
 			title: 'Sensibilisation & Communication',
-			image: 'https://afmef.bj/wp-content/uploads/2025/11/5D3_0013-copie-1024x683.jpg',
+			image: '/images/wp/activite-sensibilisation.jpg',
 			descriptions: [
 				'Organiser au profit des membres, des activités de réjouissance, sportives, cultuelles et touristiques pour favoriser le partage, la solidarité et l\'évasion.',
 				'Célébrer collectivement nos réussites et affronter conjointement les aléas de la vie.'
@@ -48,7 +48,7 @@
 		},
 		{
 			title: 'Initiatives diverses',
-			image: 'https://afmef.bj/wp-content/uploads/2025/03/8W6A2398-2.png',
+			image: '/images/wp/activite-initiatives.png',
 			descriptions: [
 				'Mener des actions sociales et humanitaires en faveur des populations vulnérables, notamment les femmes et les familles dans le besoin.',
 				'Développer des initiatives de proximité permettant de toucher directement les communautés et d\'apporter des solutions concrètes aux problématiques locales.'
@@ -130,7 +130,7 @@
 			></div>
 		{/each}
 	{:else}
-		<div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('https://afmef.bj/wp-content/uploads/2025/03/Capture-decran-2025-03-12-092700.png');"></div>
+		<div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('/images/wp/hero-fallback.png');"></div>
 	{/if}
 
 	<!-- Green overlay with gradient -->
@@ -328,7 +328,7 @@
 			<!-- Left - Sticky Image -->
 			<div class="lg:sticky lg:top-24 flex-shrink-0">
 				<img
-					src="https://afmef.bj/wp-content/uploads/2025/03/objectif-image.png"
+					src="/images/wp/objectif-image.png"
 					alt="Objectifs AFMEF"
 					class="w-[420px] max-h-[600px] object-cover object-top rounded-t-2xl rounded-b-full {isVisible['objectives-grid'] ? 'animate-fade-in' : 'opacity-0'}"
 				/>
@@ -512,7 +512,7 @@
 <!-- CTA Section - Same style as Hero -->
 <section class="relative py-24 md:py-32 overflow-hidden bg-primary">
 	<!-- Background image - same as hero -->
-	<div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('https://afmef.bj/wp-content/uploads/2025/03/Capture-decran-2025-03-12-092700.png');"></div>
+	<div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('/images/wp/hero-fallback.png');"></div>
 
 	<!-- Green overlay -->
 	<div class="absolute inset-0 bg-primary/90"></div>

@@ -60,7 +60,7 @@
 	<div class="relative z-20">
 		<div class="container mx-auto px-4 max-w-[1100px]">
 			<img
-				src="https://afmef.bj/wp-content/uploads/2025/11/hero-about-1.png"
+				src="/images/wp/hero-about.png"
 				alt="AFMEF - Assemblée Générale Constitutive"
 				class="w-full h-auto relative z-10"
 			/>
@@ -214,7 +214,7 @@
 
 					<div class="aspect-[3/4] overflow-hidden">
 						<img
-							src="https://afmef.bj/wp-content/uploads/2025/11/R144-bis-1-1481x1536.jpg"
+							src="/images/wp/fondatrice-alice.jpg"
 							alt="Mme Alice MASSIM-OUALI AFFO"
 							class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
 						/>
@@ -243,7 +243,7 @@
 
 					<div class="aspect-[3/4] overflow-hidden">
 						<img
-							src="https://afmef.bj/wp-content/uploads/2025/11/william-hd.png"
+							src="/images/wp/fondateur-william.png"
 							alt="M. William TCHEPKE"
 							class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
 						/>
@@ -295,7 +295,7 @@
 						<div class="relative">
 							<div class="aspect-[4/5] overflow-hidden">
 								<img
-									src="https://afmef.bj/wp-content/uploads/2025/11/awaou-bako-hd-.png"
+									src="/images/wp/presidente-awaou.png"
 									alt="Mme Awaou BACO"
 									class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
 								/>
@@ -340,7 +340,7 @@
 						<div class="relative">
 							<div class="aspect-[4/5] overflow-hidden">
 								<img
-									src="https://afmef.bj/wp-content/uploads/2025/11/vicentia-okry-hd.png"
+									src="/images/wp/presidente-vicentia.png"
 									alt="Mme Vicentia AKOTO OKRY"
 									class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
 								/>
