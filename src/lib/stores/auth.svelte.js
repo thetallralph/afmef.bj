@@ -61,16 +61,30 @@ export function initFromServer(serverUser) {
 export async function login(email, password) {
 	isLoading = true;
 	try {
-		const pb = getClientPB();
-		const authData = await pb.collection('users').authWithPassword(email, password);
-		user = formatUser(authData.record);
+		// Passer par l'API serveur pour que le cookie auth soit posé par hooks.server.js
+		const response = await fetch('/api/auth/login', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ email, password })
+		});
+
+		const result = await response.json();
+
+		if (!response.ok || !result.success) {
+			return {
+				success: false,
+				error: result.error || 'Identifiants incorrects'
+			};
+		}
+
+		user = result.user;
 		isAuthenticated = true;
 		return { success: true };
 	} catch (error) {
 		console.error('Erreur login:', error);
 		return {
 			success: false,
-			error: error?.response?.message || 'Identifiants incorrects'
+			error: 'Erreur de connexion au serveur'
 		};
 	} finally {
 		isLoading = false;

@@ -101,6 +101,7 @@
 		>
 			<option value="">Tous les statuts</option>
 			<option value="active">Actif</option>
+			<option value="pending">En attente</option>
 			<option value="inactive">Inactif</option>
 		</select>
 		<Button type="submit" size="sm">Rechercher</Button>
@@ -146,8 +147,8 @@
 							</td>
 							<td class="px-4 py-3">
 								<span class="px-2 py-0.5 text-xs font-medium rounded-full
-									{member.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}">
-									{member.status === 'active' ? 'Actif' : 'Inactif'}
+									{member.status === 'active' ? 'bg-green-100 text-green-700' : member.status === 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-600'}">
+									{member.status === 'active' ? 'Actif' : member.status === 'pending' ? 'En attente' : 'Inactif'}
 								</span>
 							</td>
 							<td class="px-4 py-3 text-sm text-gray-500 hidden sm:table-cell">

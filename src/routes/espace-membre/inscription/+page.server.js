@@ -35,7 +35,7 @@ export const actions = {
 		}
 
 		try {
-			// Créer le compte
+			// Créer le compte en attente de validation
 			await locals.pb.collection('users').create({
 				name,
 				email,
@@ -45,15 +45,12 @@ export const actions = {
 				structure,
 				fonction,
 				role: 'member',
-				status: 'active',
+				status: 'pending',
 				showInDirectory: true,
 				showEmail: true,
 				showPhone: false,
 				emailVisibility: true
 			});
-
-			// Connecter automatiquement après inscription
-			await locals.pb.collection('users').authWithPassword(email, password);
 		} catch (error) {
 			const message = error?.response?.data;
 			let errorMsg = 'Erreur lors de la création du compte';
@@ -72,6 +69,6 @@ export const actions = {
 			});
 		}
 
-		throw redirect(302, '/espace-membre');
+		throw redirect(302, '/espace-membre/connexion?inscrit=1');
 	}
 };

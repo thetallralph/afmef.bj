@@ -14,7 +14,7 @@
       { "name": "showPhone", "type": "bool", "comment": "Afficher le téléphone dans l'annuaire" },
       { "name": "showInDirectory", "type": "bool", "comment": "Apparaître dans l'annuaire" },
       { "name": "role", "type": "select", "options": { "values": ["member", "admin"] }, "comment": "Rôle : member ou admin" },
-      { "name": "status", "type": "select", "options": { "values": ["active", "inactive"] }, "comment": "Statut du compte" }
+      { "name": "status", "type": "select", "options": { "values": ["active", "inactive", "pending"] }, "comment": "Statut du compte" }
     ]
   },
   {

@@ -4,8 +4,11 @@
 	import Input from '$lib/components/ui/Input.svelte';
 	import Alert from '$lib/components/ui/Alert.svelte';
 
+	import { page } from '$app/stores';
+
 	let { form } = $props();
 	let loading = $state(false);
+	let inscrit = $derived($page.url.searchParams.has('inscrit'));
 </script>
 
 <svelte:head>

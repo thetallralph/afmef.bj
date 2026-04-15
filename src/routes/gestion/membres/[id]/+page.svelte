@@ -110,6 +110,7 @@
 							class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none bg-white text-sm"
 						>
 							<option value="active" selected={member.status === 'active'}>Actif</option>
+							<option value="pending" selected={member.status === 'pending'}>En attente de validation</option>
 							<option value="inactive" selected={member.status === 'inactive'}>Inactif</option>
 						</select>
 					</div>
@@ -162,8 +163,8 @@
 				<div class="flex justify-between">
 					<dt class="text-gray-500">Statut</dt>
 					<dd>
-						<span class="px-2 py-0.5 text-xs font-medium rounded-full {member.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}">
-							{member.status === 'active' ? 'Actif' : 'Inactif'}
+						<span class="px-2 py-0.5 text-xs font-medium rounded-full {member.status === 'active' ? 'bg-green-100 text-green-700' : member.status === 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-600'}">
+							{member.status === 'active' ? 'Actif' : member.status === 'pending' ? 'En attente' : 'Inactif'}
 						</span>
 					</dd>
 				</div>

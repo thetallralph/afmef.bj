@@ -1,5 +1,6 @@
 <script>
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Input from '$lib/components/ui/Input.svelte';
 	import Alert from '$lib/components/ui/Alert.svelte';
@@ -11,6 +12,10 @@
 	let errors = $state({});
 	let globalError = $state('');
 	let loading = $state(false);
+
+	let inscrit = $derived($page.url.searchParams.has('inscrit'));
+	let pending = $derived($page.url.searchParams.has('pending'));
+	let inactive = $derived($page.url.searchParams.has('inactive'));
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -54,6 +59,30 @@
 
 		<!-- Login form -->
 		<div class="bg-white rounded-2xl shadow-xl p-8">
+			{#if inscrit}
+				<div class="mb-6">
+					<Alert type="success">
+						Votre inscription a été enregistrée. Un administrateur doit valider votre compte avant que vous puissiez vous connecter.
+					</Alert>
+				</div>
+			{/if}
+
+			{#if pending}
+				<div class="mb-6">
+					<Alert type="warning">
+						Votre compte est en attente de validation par un administrateur.
+					</Alert>
+				</div>
+			{/if}
+
+			{#if inactive}
+				<div class="mb-6">
+					<Alert type="error">
+						Votre compte a été désactivé. Contactez un administrateur pour plus d'informations.
+					</Alert>
+				</div>
+			{/if}
+
 			{#if globalError}
 				<div class="mb-6">
 					<Alert type="error" dismissible ondismiss={() => globalError = ''}>
