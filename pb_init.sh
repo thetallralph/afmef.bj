@@ -63,7 +63,7 @@ create_collection() {
 create_collection "type_activites" '{
     "name": "type_activites",
     "type": "base",
-    "schema": [
+    "fields": [
         {"name": "name", "type": "text", "required": true},
         {"name": "slug", "type": "text", "required": true}
     ],
@@ -77,7 +77,7 @@ create_collection "type_activites" '{
 create_collection "activites" '{
     "name": "activites",
     "type": "base",
-    "schema": [
+    "fields": [
         {"name": "title", "type": "text", "required": true},
         {"name": "slug", "type": "text", "required": true},
         {"name": "content", "type": "editor"},
@@ -97,7 +97,7 @@ create_collection "activites" '{
 create_collection "ressources" '{
     "name": "ressources",
     "type": "base",
-    "schema": [
+    "fields": [
         {"name": "title", "type": "text", "required": true},
         {"name": "slug", "type": "text", "required": true},
         {"name": "description", "type": "text"},
@@ -117,7 +117,7 @@ create_collection "ressources" '{
 create_collection "events" '{
     "name": "events",
     "type": "base",
-    "schema": [
+    "fields": [
         {"name": "title", "type": "text", "required": true},
         {"name": "slug", "type": "text", "required": true},
         {"name": "description", "type": "editor"},
@@ -137,7 +137,7 @@ create_collection "events" '{
 create_collection "event_registrations" '{
     "name": "event_registrations",
     "type": "base",
-    "schema": [
+    "fields": [
         {"name": "event", "type": "relation", "required": true, "options": {"collectionId": "events", "maxSelect": 1}},
         {"name": "user", "type": "relation", "required": true, "options": {"collectionId": "_pb_users_auth_", "maxSelect": 1}},
         {"name": "registeredAt", "type": "autodate", "options": {"onCreate": true, "onUpdate": false}}
@@ -152,7 +152,7 @@ create_collection "event_registrations" '{
 create_collection "cotisations" '{
     "name": "cotisations",
     "type": "base",
-    "schema": [
+    "fields": [
         {"name": "user", "type": "relation", "required": true, "options": {"collectionId": "_pb_users_auth_", "maxSelect": 1}},
         {"name": "year", "type": "number", "required": true},
         {"name": "amount", "type": "number", "required": true},
@@ -171,7 +171,7 @@ create_collection "cotisations" '{
 create_collection "documents" '{
     "name": "documents",
     "type": "base",
-    "schema": [
+    "fields": [
         {"name": "title", "type": "text", "required": true},
         {"name": "description", "type": "text"},
         {"name": "file", "type": "file", "required": true, "options": {"maxSelect": 1, "maxSize": 10485760}},
