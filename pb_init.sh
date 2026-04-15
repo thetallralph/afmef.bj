@@ -1,6 +1,6 @@
 #!/bin/sh
-# Script d'initialisation PocketBase
-# Attend que PocketBase soit prêt puis crée les collections manquantes via l'API admin
+# Script d'initialisation PocketBase (compatible PB 0.23+)
+# Attend que PocketBase soit prêt puis crée les collections manquantes via l'API superuser
 
 PB_URL="http://localhost:8090"
 ADMIN_EMAIL="${PB_ADMIN_EMAIL:-admin@afmef.bj}"
@@ -12,26 +12,21 @@ until wget -qO- "$PB_URL/api/health" > /dev/null 2>&1; do
 done
 echo "[pb_init] PocketBase est prêt."
 
-# Créer le compte admin si nécessaire (premier lancement)
-echo "[pb_init] Vérification du compte admin..."
-ADMIN_CHECK=$(wget -qO- "$PB_URL/api/admins" 2>&1)
-if echo "$ADMIN_CHECK" | grep -q '"totalItems":0'; then
-    echo "[pb_init] Création du compte admin..."
-    wget -qO- --post-data="{\"email\":\"$ADMIN_EMAIL\",\"password\":\"$ADMIN_PASSWORD\",\"passwordConfirm\":\"$ADMIN_PASSWORD\"}" \
-        --header="Content-Type: application/json" \
-        "$PB_URL/api/admins" > /dev/null 2>&1
-fi
+# Créer le superuser via CLI (plus fiable que l'API pour le premier compte)
+echo "[pb_init] Création/mise à jour du superuser..."
+/usr/local/bin/pocketbase superuser upsert "$ADMIN_EMAIL" "$ADMIN_PASSWORD" --dir=/pb/pb_data 2>/dev/null
+echo "[pb_init] Superuser prêt."
 
-# Authentification admin
-echo "[pb_init] Authentification admin..."
+# Authentification superuser (PB 0.23+ : _superusers)
+echo "[pb_init] Authentification superuser..."
 AUTH_RESPONSE=$(wget -qO- --post-data="{\"identity\":\"$ADMIN_EMAIL\",\"password\":\"$ADMIN_PASSWORD\"}" \
     --header="Content-Type: application/json" \
-    "$PB_URL/api/admins/auth-with-password" 2>&1)
+    "$PB_URL/api/collections/_superusers/auth-with-password" 2>&1)
 
 TOKEN=$(echo "$AUTH_RESPONSE" | sed -n 's/.*"token":"\([^"]*\)".*/\1/p')
 
 if [ -z "$TOKEN" ]; then
-    echo "[pb_init] ERREUR: Impossible de s'authentifier en admin. Abandon."
+    echo "[pb_init] ERREUR: Impossible de s'authentifier. Abandon."
     exit 0
 fi
 
@@ -39,9 +34,8 @@ echo "[pb_init] Authentifié. Vérification des collections..."
 
 # Fonction pour vérifier si une collection existe
 collection_exists() {
-    CODE=$(wget -qO- --header="Authorization: $TOKEN" \
-        -S "$PB_URL/api/collections/$1" 2>&1 | grep "HTTP/" | tail -1 | awk '{print $2}')
-    [ "$CODE" = "200" ]
+    RESPONSE=$(wget -qO- --header="Authorization: $TOKEN" "$PB_URL/api/collections/$1" 2>&1)
+    echo "$RESPONSE" | grep -q '"id"'
 }
 
 # Fonction pour créer une collection
@@ -52,11 +46,15 @@ create_collection() {
         echo "[pb_init] Collection '$NAME' existe déjà."
     else
         echo "[pb_init] Création de la collection '$NAME'..."
-        wget -qO- --post-data="$JSON" \
+        RESULT=$(wget -qO- --post-data="$JSON" \
             --header="Content-Type: application/json" \
             --header="Authorization: $TOKEN" \
-            "$PB_URL/api/collections" > /dev/null 2>&1
-        echo "[pb_init] Collection '$NAME' créée."
+            "$PB_URL/api/collections" 2>&1)
+        if echo "$RESULT" | grep -q '"id"'; then
+            echo "[pb_init] Collection '$NAME' créée."
+        else
+            echo "[pb_init] ERREUR création '$NAME': $RESULT"
+        fi
     fi
 }
 
@@ -115,14 +113,6 @@ create_collection "ressources" '{
 }'
 
 # === Collections espace membre ===
-# Note : la collection "users" est créée automatiquement par PocketBase (auth)
-# On doit ajouter les champs custom après la création
-
-echo "[pb_init] Mise à jour des champs custom de la collection 'users'..."
-# PocketBase crée automatiquement la collection users, on vérifie juste qu'elle existe
-if collection_exists "_pb_users_auth_"; then
-    echo "[pb_init] Collection 'users' existe. Les champs custom doivent être ajoutés via l'admin UI."
-fi
 
 create_collection "events" '{
     "name": "events",
