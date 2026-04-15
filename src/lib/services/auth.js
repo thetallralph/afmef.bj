@@ -15,7 +15,7 @@ export function formatUser(record) {
 		email: record.email || '',
 		slug: record.id,
 		avatar: record.avatar
-			? `${record.collectionId}/${record.id}/${record.avatar}`
+			? `/api/files/${record.collectionId}/${record.id}/${record.avatar}`
 			: null,
 		description: record.description || '',
 		phone: record.phone || '',

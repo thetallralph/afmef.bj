@@ -1,8 +1,6 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import Header from '$lib/components/Header.svelte';
-	import Footer from '$lib/components/Footer.svelte';
 	import MemberHeader from '$lib/components/member/MemberHeader.svelte';
 	import { logout } from '$lib/stores/auth.svelte.js';
 
@@ -27,8 +25,7 @@
 	<!-- Public pages (login, password reset) - standalone layout -->
 	{@render children()}
 {:else}
-	<!-- Protected pages with main header + member sub-header -->
-	<Header />
+	<!-- Protected pages with member sub-header (Header/Footer fournis par le layout racine) -->
 	<MemberHeader user={data.user} onlogout={handleLogout} />
 
 	<main class="min-h-[60vh] bg-gray-50 py-8 lg:py-12">
@@ -36,6 +33,4 @@
 			{@render children()}
 		</div>
 	</main>
-
-	<Footer />
 {/if}
