@@ -1,8 +1,9 @@
 FROM ghcr.io/muchobien/pocketbase:latest
 
-COPY pb_init.sh /pb/pb_init.sh
+RUN mkdir -p /pb/pb_data
 
-# Entrypoint : lance PocketBase en arrière-plan, exécute l'init, puis attend
+COPY pb_init.sh /pb/pb_init.sh
 COPY pb_entrypoint.sh /pb/pb_entrypoint.sh
+RUN chmod +x /pb/pb_entrypoint.sh /pb/pb_init.sh
 
 ENTRYPOINT ["/pb/pb_entrypoint.sh"]
