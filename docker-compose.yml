@@ -18,7 +18,7 @@ services:
       dockerfile: Dockerfile.pocketbase
     restart: unless-stopped
     volumes:
-      - pb_data:/pb/pb_data
+      - /data/afmef/pb_data:/pb/pb_data
     environment:
       - PB_ADMIN_EMAIL=${PB_ADMIN_EMAIL:-admin@afmef.bj}
       - PB_ADMIN_PASSWORD=${PB_ADMIN_PASSWORD:-AdminAfmef2026!}
@@ -44,5 +44,3 @@ services:
       - ORIGIN=https://afmef.bj
       - PUBLIC_KKIAPAY_API_KEY=${PUBLIC_KKIAPAY_API_KEY:-}
 
-volumes:
-  pb_data:
