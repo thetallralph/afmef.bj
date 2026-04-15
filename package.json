@@ -22,6 +22,7 @@
 	},
 	"dependencies": {
 		"@sveltejs/adapter-node": "^5.5.4",
+		"kkiapay": "^2.0.38",
 		"pdfjs-dist": "^5.4.530",
 		"pocketbase": "^0.26.8"
 	}

@@ -52,7 +52,8 @@
       { "name": "amount", "type": "number", "required": true },
       { "name": "status", "type": "select", "options": { "values": ["pending", "paid"] } },
       { "name": "paidAt", "type": "date" },
-      { "name": "method", "type": "select", "options": { "values": ["mobile_money", "virement", "especes"] } }
+      { "name": "method", "type": "select", "options": { "values": ["mobile_money", "virement", "especes", "kkiapay"] } },
+      { "name": "transactionId", "type": "text", "comment": "ID de transaction KKiaPay" }
     ]
   },
   {
@@ -64,6 +65,43 @@
       { "name": "description", "type": "text" },
       { "name": "file", "type": "file", "required": true },
       { "name": "category", "type": "select", "options": { "values": ["rapport", "pv", "formation", "autre"] } }
+    ]
+  },
+  {
+    "name": "type_activites",
+    "type": "base",
+    "comment": "Types/catégories d'activités",
+    "schema": [
+      { "name": "name", "type": "text", "required": true },
+      { "name": "slug", "type": "text", "required": true }
+    ]
+  },
+  {
+    "name": "activites",
+    "type": "base",
+    "comment": "Activités et actualités de l'association",
+    "schema": [
+      { "name": "title", "type": "text", "required": true },
+      { "name": "slug", "type": "text", "required": true },
+      { "name": "content", "type": "editor" },
+      { "name": "excerpt", "type": "text" },
+      { "name": "date", "type": "date", "required": true },
+      { "name": "image", "type": "file" },
+      { "name": "imageAlt", "type": "text" },
+      { "name": "types", "type": "relation", "options": { "collectionId": "type_activites" } }
+    ]
+  },
+  {
+    "name": "ressources",
+    "type": "base",
+    "comment": "Ressources et documents téléchargeables",
+    "schema": [
+      { "name": "title", "type": "text", "required": true },
+      { "name": "slug", "type": "text", "required": true },
+      { "name": "description", "type": "text" },
+      { "name": "date", "type": "date" },
+      { "name": "fichier", "type": "file" },
+      { "name": "fichierType", "type": "text" }
     ]
   }
 ]

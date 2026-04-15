@@ -33,7 +33,7 @@
 	}
 
 	function methodLabel(method) {
-		const labels = { mobile_money: 'Mobile Money', virement: 'Virement', especes: 'Espèces' };
+		const labels = { mobile_money: 'Mobile Money', virement: 'Virement', especes: 'Espèces', kkiapay: 'KKiaPay' };
 		return labels[method] || method || '-';
 	}
 
@@ -116,7 +116,14 @@
 							</td>
 							<td class="px-4 py-3 text-sm font-medium text-gray-900">{cot.year}</td>
 							<td class="px-4 py-3 text-sm text-gray-600">{formatCurrency(cot.amount)}</td>
-							<td class="px-4 py-3 text-sm text-gray-600 hidden md:table-cell">{methodLabel(cot.method)}</td>
+							<td class="px-4 py-3 text-sm text-gray-600 hidden md:table-cell">
+								{methodLabel(cot.method)}
+								{#if cot.transactionId}
+									<p class="text-xs text-gray-400 truncate max-w-[120px]" title={cot.transactionId}>
+										Tx: {cot.transactionId}
+									</p>
+								{/if}
+							</td>
 							<td class="px-4 py-3 text-sm text-gray-500 hidden sm:table-cell">
 								{cot.paidAt ? formatDate(cot.paidAt) : '-'}
 							</td>
