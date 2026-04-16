@@ -394,26 +394,37 @@ export async function deleteMember(pb, id) {
  * @returns {Promise<Object>}
  */
 export async function getAdminStats(pb) {
+	const currentYear = new Date().getFullYear();
+	const stats = { totalMembers: 0, activeMembers: 0, pendingMembers: 0, cotisationsPaid: 0, cotisationsPending: 0 };
+
 	try {
-		const currentYear = new Date().getFullYear();
+		const active = await pb.collection('users').getList(1, 1, { filter: 'status = "active"' });
+		stats.activeMembers = active.totalItems;
+	} catch { /* champ status pas encore créé */ }
 
-		const [members, activeMembers, cotisationsPaid, cotisationsPending] = await Promise.all([
-			pb.collection('users').getList(1, 1, { filter: 'id != ""' }),
-			pb.collection('users').getList(1, 1, { filter: 'status = "active"' }),
-			pb.collection('cotisations').getList(1, 1, { filter: `year = ${currentYear} && status = "paid"` }),
-			pb.collection('cotisations').getList(1, 1, { filter: `year = ${currentYear} && status = "pending"` })
-		]);
+	try {
+		const pending = await pb.collection('users').getList(1, 1, { filter: 'status = "pending"' });
+		stats.pendingMembers = pending.totalItems;
+	} catch { /* */ }
 
-		return {
-			totalMembers: members.totalItems,
-			activeMembers: activeMembers.totalItems,
-			cotisationsPaid: cotisationsPaid.totalItems,
-			cotisationsPending: cotisationsPending.totalItems
-		};
-	} catch (error) {
-		console.error('Erreur getAdminStats:', error);
-		return { totalMembers: 0, activeMembers: 0, cotisationsPaid: 0, cotisationsPending: 0 };
+	try {
+		const inactive = await pb.collection('users').getList(1, 1, { filter: 'status = "inactive"' });
+		stats.totalMembers = stats.activeMembers + stats.pendingMembers + inactive.totalItems;
+	} catch {
+		stats.totalMembers = stats.activeMembers + stats.pendingMembers;
 	}
+
+	try {
+		const paid = await pb.collection('cotisations').getList(1, 1, { filter: `year = ${currentYear} && status = "paid"` });
+		stats.cotisationsPaid = paid.totalItems;
+	} catch { /* */ }
+
+	try {
+		const pendingCot = await pb.collection('cotisations').getList(1, 1, { filter: `year = ${currentYear} && status = "pending"` });
+		stats.cotisationsPending = pendingCot.totalItems;
+	} catch { /* */ }
+
+	return stats;
 }
 
 /**

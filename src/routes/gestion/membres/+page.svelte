@@ -128,13 +128,22 @@
 						<tr class="hover:bg-gray-50 transition-colors">
 							<td class="px-4 py-3">
 								<a href="/gestion/membres/{member.id}" class="flex items-center gap-3">
-									<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-										<span class="text-primary font-bold text-xs">
-											{member.displayName?.charAt(0).toUpperCase() || '?'}
-										</span>
+									<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 overflow-hidden">
+										{#if member.avatar}
+											<img src={member.avatar} alt="" class="w-full h-full object-cover" />
+										{:else}
+											<span class="text-primary font-bold text-xs">
+												{member.displayName?.charAt(0).toUpperCase() || '?'}
+											</span>
+										{/if}
 									</div>
 									<div class="min-w-0">
-										<p class="text-sm font-medium text-gray-900 truncate">{member.displayName}</p>
+										<div class="flex items-center gap-1.5">
+											<p class="text-sm font-medium text-gray-900 truncate">{member.displayName}</p>
+											{#if member.role === 'admin'}
+												<span class="px-1 py-0.5 text-[9px] font-bold rounded bg-purple-100 text-purple-700 uppercase flex-shrink-0">Admin</span>
+											{/if}
+										</div>
 										<p class="text-xs text-gray-500 truncate">{member.email}</p>
 									</div>
 								</a>

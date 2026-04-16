@@ -21,16 +21,17 @@
 			icon: 'active'
 		},
 		{
+			label: 'En attente de validation',
+			value: stats.pendingMembers,
+			color: 'bg-yellow-100 text-yellow-700',
+			icon: 'pending',
+			href: '/gestion/membres?status=pending'
+		},
+		{
 			label: 'Cotisations payées',
 			value: stats.cotisationsPaid,
 			color: 'bg-blue-100 text-blue-700',
 			icon: 'paid'
-		},
-		{
-			label: 'Cotisations en attente',
-			value: stats.cotisationsPending,
-			color: 'bg-yellow-100 text-yellow-700',
-			icon: 'pending'
 		}
 	]);
 </script>
@@ -44,7 +45,7 @@
 <!-- Stats -->
 <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-8">
 	{#each cards as card}
-		<div class="bg-white rounded-xl p-5 border border-gray-200">
+		<a href={card.href || '#'} class="bg-white rounded-xl p-5 border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all block">
 			<div class="flex items-center gap-3 mb-3">
 				<div class="w-10 h-10 rounded-lg flex items-center justify-center {card.color}">
 					{#if card.icon === 'members'}
@@ -68,7 +69,7 @@
 				<span class="text-sm text-gray-500">{card.label}</span>
 			</div>
 			<p class="text-3xl font-bold text-gray-900">{card.value}</p>
-		</div>
+		</a>
 	{/each}
 </div>
 
@@ -110,7 +111,12 @@
 							<p class="text-sm font-medium text-gray-900 truncate">{member.displayName}</p>
 							<p class="text-xs text-gray-500 truncate">{member.structure || member.email}</p>
 						</div>
-						<span class="text-xs text-gray-400 flex-shrink-0">{formatDate(member.created)}</span>
+						<div class="flex items-center gap-2 flex-shrink-0">
+							<span class="px-2 py-0.5 text-xs font-medium rounded-full
+								{member.status === 'active' ? 'bg-green-100 text-green-700' : member.status === 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-600'}">
+								{member.status === 'active' ? 'Actif' : member.status === 'pending' ? 'En attente' : 'Inactif'}
+							</span>
+						</div>
 					</a>
 				{/each}
 			</div>

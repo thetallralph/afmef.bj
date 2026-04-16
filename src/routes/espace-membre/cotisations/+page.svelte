@@ -196,7 +196,11 @@
 		</div>
 	{:else}
 		<div class="p-10 text-center">
-			<p class="text-gray-500">Aucun paiement enregistré</p>
+			<svg class="w-12 h-12 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+			</svg>
+			<p class="text-gray-500 mb-1">Aucun paiement enregistré</p>
+			<p class="text-gray-400 text-sm">Vos cotisations apparaîtront ici une fois créées par un administrateur</p>
 		</div>
 	{/if}
 </div>

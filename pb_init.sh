@@ -112,6 +112,21 @@ create_collection "ressources" '{
     "deleteRule": null
 }'
 
+# === Champs custom de la collection users ===
+echo "[pb_init] Ajout des champs custom à la collection 'users'..."
+USERS_FIELDS=$(wget -qO- --header="Authorization: $TOKEN" "$PB_URL/api/collections/users" 2>&1 | sed -n 's/.*"fields":\(\[.*\]\).*/\1/p')
+if echo "$USERS_FIELDS" | grep -q '"role"'; then
+    echo "[pb_init] Champs custom users déjà présents."
+else
+    # Ajouter les champs manquants via Python-less JSON merge (append à la liste)
+    PATCH_DATA="{\"fields\": $(echo "$USERS_FIELDS" | sed 's/\]$/,{"name":"phone","type":"text"},{"name":"structure","type":"text"},{"name":"fonction","type":"text"},{"name":"description","type":"text"},{"name":"showEmail","type":"bool"},{"name":"showPhone","type":"bool"},{"name":"showInDirectory","type":"bool"},{"name":"role","type":"select","values":["member","admin"]},{"name":"status","type":"select","values":["active","inactive","pending"]}]/')}"
+    wget -qO- --method=PATCH --body-data="$PATCH_DATA" \
+        --header="Content-Type: application/json" \
+        --header="Authorization: $TOKEN" \
+        "$PB_URL/api/collections/users" > /dev/null 2>&1
+    echo "[pb_init] Champs custom users ajoutés."
+fi
+
 # === Collections espace membre ===
 
 create_collection "events" '{
