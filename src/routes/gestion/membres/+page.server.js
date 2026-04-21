@@ -1,4 +1,5 @@
-import { getAllMembers, deleteMember } from '$lib/services/auth.js';
+import { getAllMembers, deleteMember, updateMember, getMemberById } from '$lib/services/auth.js';
+import { sendMemberValidationEmail } from '$lib/services/email.js';
 import { fail } from '@sveltejs/kit';
 
 export async function load({ locals, url }) {
@@ -29,5 +30,31 @@ export const actions = {
 		}
 
 		return { success: true };
+	},
+
+	setStatus: async ({ request, locals }) => {
+		const formData = await request.formData();
+		const id = formData.get('id');
+		const status = formData.get('status');
+		const notify = formData.get('notify') === '1';
+
+		if (!id || !['active', 'pending', 'inactive'].includes(status)) {
+			return fail(400, { error: 'Paramètres invalides' });
+		}
+
+		const result = await updateMember(locals.pb, id, { status });
+		if (!result.success) {
+			return fail(400, { error: result.error });
+		}
+
+		let emailResult = null;
+		if (notify && status === 'active') {
+			const member = await getMemberById(locals.pb, id);
+			if (member?.email) {
+				emailResult = await sendMemberValidationEmail({ email: member.email, name: member.displayName });
+			}
+		}
+
+		return { success: true, emailSent: emailResult?.success, emailError: emailResult?.error };
 	}
 };

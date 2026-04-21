@@ -1,5 +1,6 @@
 <script>
 	import { goto, invalidateAll } from '$app/navigation';
+	import { deserialize } from '$app/forms';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Alert from '$lib/components/ui/Alert.svelte';
 	import Modal from '$lib/components/ui/Modal.svelte';
@@ -13,6 +14,8 @@
 	let memberToDelete = $state(null);
 	let deleteLoading = $state(false);
 	let error = $state('');
+	let notice = $state('');
+	let statusLoading = $state({});
 
 	function handleSearch(e) {
 		e.preventDefault();
@@ -34,6 +37,14 @@
 		deleteModal = true;
 	}
 
+	async function postAction(action, formData) {
+		const response = await fetch(`/gestion/membres?/${action}`, {
+			method: 'POST',
+			body: formData
+		});
+		return deserialize(await response.text());
+	}
+
 	async function handleDelete() {
 		if (!memberToDelete) return;
 		deleteLoading = true;
@@ -41,13 +52,7 @@
 
 		const formData = new FormData();
 		formData.set('id', memberToDelete.id);
-
-		const response = await fetch('/gestion/membres?/delete', {
-			method: 'POST',
-			body: formData
-		});
-
-		const result = await response.json();
+		const result = await postAction('delete', formData);
 
 		if (result.type === 'failure') {
 			error = result.data?.error || 'Erreur lors de la suppression';
@@ -57,6 +62,36 @@
 			await invalidateAll();
 		}
 		deleteLoading = false;
+	}
+
+	async function setStatus(member, status, { notify = false } = {}) {
+		statusLoading[member.id] = true;
+		error = '';
+		notice = '';
+
+		const formData = new FormData();
+		formData.set('id', member.id);
+		formData.set('status', status);
+		if (notify) formData.set('notify', '1');
+
+		const result = await postAction('setStatus', formData);
+
+		if (result.type === 'failure') {
+			error = result.data?.error || 'Erreur lors de la mise à jour';
+		} else {
+			if (notify && status === 'active') {
+				if (result.data?.emailSent) {
+					notice = `${member.displayName} validé·e — email de bienvenue envoyé.`;
+				} else {
+					notice = `${member.displayName} validé·e. Email non envoyé (${result.data?.emailError || 'SMTP non configuré'}).`;
+				}
+			} else {
+				notice = `Statut de ${member.displayName} mis à jour.`;
+			}
+			await invalidateAll();
+		}
+		delete statusLoading[member.id];
+		statusLoading = { ...statusLoading };
 	}
 </script>
 
@@ -77,6 +112,11 @@
 {#if error}
 	<div class="mb-4">
 		<Alert type="error" dismissible ondismiss={() => error = ''}>{error}</Alert>
+	</div>
+{/if}
+{#if notice}
+	<div class="mb-4">
+		<Alert type="success" dismissible ondismiss={() => notice = ''}>{notice}</Alert>
 	</div>
 {/if}
 
@@ -165,6 +205,38 @@
 							</td>
 							<td class="px-4 py-3 text-right">
 								<div class="flex items-center justify-end gap-1">
+									{#if member.status === 'pending'}
+										<button
+											onclick={() => setStatus(member, 'active', { notify: true })}
+											disabled={statusLoading[member.id]}
+											class="px-2.5 py-1 rounded-lg text-xs font-medium text-green-700 bg-green-50 hover:bg-green-100 transition-colors disabled:opacity-50"
+											title="Valider le compte et envoyer l'email de bienvenue"
+										>
+											{statusLoading[member.id] ? '…' : 'Valider'}
+										</button>
+									{:else if member.status === 'active'}
+										<button
+											onclick={() => setStatus(member, 'inactive')}
+											disabled={statusLoading[member.id]}
+											class="p-1.5 rounded-lg text-gray-400 hover:text-amber-600 hover:bg-amber-50 transition-colors disabled:opacity-50"
+											title="Désactiver"
+										>
+											<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+											</svg>
+										</button>
+									{:else if member.status === 'inactive'}
+										<button
+											onclick={() => setStatus(member, 'active')}
+											disabled={statusLoading[member.id]}
+											class="p-1.5 rounded-lg text-gray-400 hover:text-green-600 hover:bg-green-50 transition-colors disabled:opacity-50"
+											title="Réactiver"
+										>
+											<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+											</svg>
+										</button>
+									{/if}
 									<a
 										href="/gestion/membres/{member.id}"
 										class="p-1.5 rounded-lg text-gray-400 hover:text-primary hover:bg-primary/5 transition-colors"
