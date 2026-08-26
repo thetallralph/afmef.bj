@@ -1,6 +1,7 @@
 <script>
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import AboutNavLinks from '$lib/components/AboutNavLinks.svelte';
+	import { CmsText } from '$lib/components/cms/index.js';
 
 	let isVisible = $state({});
 
@@ -86,26 +87,28 @@
 					<div class="lg:col-span-1">
 						<div class="sticky top-24 p-8 rounded-2xl {organ.color === 'primary' ? 'bg-primary' : organ.color === 'secondary' ? 'bg-secondary' : 'bg-red-600'}">
 							<h2 class="text-2xl md:text-3xl font-bold {organ.color === 'secondary' ? 'text-gray-900' : 'text-white'}">
-								{organ.title}
+								<CmsText key="organe{i + 1}.titre" label="Organe {i + 1} — titre">{organ.title}</CmsText>
 							</h2>
 						</div>
 					</div>
 
 					<!-- Content -->
 					<div class="lg:col-span-2 space-y-6">
-						<p class="text-lg text-gray-600">{organ.description}</p>
+						<CmsText key="organe{i + 1}.description" label="Organe {i + 1} — description" tag="p" class="block text-lg text-gray-600">{organ.description}</CmsText>
 
 						<div>
-							<h3 class="font-bold text-gray-900 mb-3">Rôles et attributions :</h3>
+							<h3 class="font-bold text-gray-900 mb-3">
+								<CmsText key="commun.intituleRoles" label="Intitulé « Rôles et attributions »">Rôles et attributions :</CmsText>
+							</h3>
 							<ul class="space-y-2">
-								{#each organ.roles as role}
+								{#each organ.roles as role, j}
 									<li class="flex gap-3 text-gray-600">
 										<span class="text-primary mt-1 flex-shrink-0">
 											<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
 											</svg>
 										</span>
-										<span>{role}</span>
+										<CmsText key="organe{i + 1}.role{j + 1}" label="Organe {i + 1} — rôle {j + 1}">{role}</CmsText>
 									</li>
 								{/each}
 							</ul>
@@ -113,14 +116,16 @@
 
 						{#if organ.note}
 							<div class="p-4 bg-primary-bg rounded-xl">
-								<p class="text-gray-700 italic">{organ.note}</p>
+								<CmsText key="organe{i + 1}.note" label="Organe {i + 1} — encadré" tag="p" class="block text-gray-700 italic">{organ.note}</CmsText>
 							</div>
 						{/if}
 
 						{#if organ.structuresDecentralisees}
 							<div class="p-6 bg-gray-50 rounded-xl border-l-4 border-secondary">
-								<h4 class="font-bold text-gray-900 mb-2">Structures Décentralisées</h4>
-								<p class="text-gray-600">{organ.structuresDecentralisees}</p>
+								<h4 class="font-bold text-gray-900 mb-2">
+									<CmsText key="organe{i + 1}.structuresTitre" label="Organe {i + 1} — titre « Structures décentralisées »">Structures Décentralisées</CmsText>
+								</h4>
+								<CmsText key="organe{i + 1}.structuresTexte" label="Organe {i + 1} — texte « Structures décentralisées »" tag="p" class="block text-gray-600">{organ.structuresDecentralisees}</CmsText>
 							</div>
 						{/if}
 					</div>

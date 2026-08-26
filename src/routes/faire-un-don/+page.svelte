@@ -1,4 +1,6 @@
 <script>
+	import { CmsText } from '$lib/components/cms/index.js';
+
 	let isVisible = $state({});
 
 	$effect(() => {
@@ -38,17 +40,17 @@
 			</div>
 
 			<h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-				Faire un Don
+				<CmsText key="hero.titre" label="Titre">Faire un Don</CmsText>
 			</h1>
 
 			<div class="inline-flex items-center gap-2 bg-secondary/20 px-4 py-2 rounded-full mb-6">
 				<span class="w-2 h-2 bg-secondary rounded-full"></span>
-				<span class="text-gray-700 text-sm font-medium">Bientôt disponible</span>
+				<CmsText key="hero.badge" label="Badge" class="text-gray-700 text-sm font-medium">Bientôt disponible</CmsText>
 			</div>
 
-			<p class="text-lg text-gray-600 leading-relaxed max-w-xl mx-auto mb-10">
+			<CmsText key="hero.texte" label="Texte" tag="p" class="block text-lg text-gray-600 leading-relaxed max-w-xl mx-auto mb-10">
 				Nous travaillons activement sur cette page pour vous permettre de soutenir les actions de l'AFMEF.
-			</p>
+			</CmsText>
 
 			<!-- CTA -->
 			<div class="flex flex-wrap justify-center gap-4">
@@ -56,10 +58,10 @@
 					<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
 					</svg>
-					Retour à l'accueil
+					<CmsText key="hero.bouton1" label="Bouton principal">Retour à l'accueil</CmsText>
 				</a>
 				<a href="/contact" class="inline-flex items-center gap-2 border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold py-3 px-6 rounded-full transition-all duration-300">
-					Nous contacter
+					<CmsText key="hero.bouton2" label="Bouton secondaire">Nous contacter</CmsText>
 				</a>
 			</div>
 		</div>

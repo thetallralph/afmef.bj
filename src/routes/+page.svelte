@@ -1,6 +1,74 @@
 <script>
+	import { CmsText, CmsImage } from '$lib/components/cms/index.js';
+	import { useCms } from '$lib/cms/context.js';
+
 	/** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
+
+	const cms = useCms();
+
+	// Images posées en fond CSS : le champ caché correspondant dans le gabarit les
+	// rend détectables et remplaçables depuis /gestion/contenu.
+	const FOND_DEFAUT = '/images/wp/hero-fallback.png';
+	const fondHero = $derived(cms.image['hero.fond'] || FOND_DEFAUT);
+	const fondCta = $derived(cms.image['cta.fond'] || FOND_DEFAUT);
+
+	// Valeurs défilantes : une seule ligne séparée par des virgules côté admin.
+	const VALEURS_DEFAUT =
+		'Engagement, Autonomisation, Solidarité, Réussite, Plaidoyer, Leadership, Épanouissement, Excellence';
+	const valeurs = $derived(
+		(cms.text['valeurs.liste'] || VALEURS_DEFAUT)
+			.split(',')
+			.map((v) => v.trim())
+			.filter(Boolean)
+	);
+
+	// Objectifs de l'association : titre et texte sont éditables depuis
+	// /gestion/contenu, l'icône reste définie ici.
+	const objectifs = [
+		{
+			icon:
+				'M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-4.5A3.375 3.375 0 0012.75 10.5h-1.5A3.375 3.375 0 007.5 14.25v4.5m6-6V6.75a3 3 0 00-3-3h0a3 3 0 00-3 3v3m6 0h-6',
+			titre: 'Favoriser',
+			texte: 'la promotion et l\'épanouissement des femmes du Ministère en charge des Finances.'
+		},
+		{
+			icon:
+				'M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z',
+			titre: 'Créer et développer',
+			texte: 'une ambiance de solidarité entre les femmes du Ministère en charge des Finances.'
+		},
+		{
+			icon:
+				'M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46',
+			titre: 'Sensibiliser',
+			texte: 'les femmes du MEF pour leur autonomisation et leur participation au développement et à la prospérité.'
+		},
+		{
+			icon:
+				'M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z',
+			titre: 'Contribuer à lutter',
+			texte: 'contre la pauvreté et les fléaux socioprofessionnels.'
+		},
+		{
+			icon:
+				'M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z',
+			titre: 'Combattre',
+			texte: 'le harcèlement, les brimades, l\'injustice à l\'égard des femmes et assister les victimes.'
+		},
+		{
+			icon:
+				'M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z',
+			titre: 'Représenter',
+			texte: 'les femmes dans les discussions avec les autorités.'
+		},
+		{
+			icon:
+				'M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z',
+			titre: 'Organiser',
+			texte: 'les manifestations de mobilisation des femmes pour leur émancipation.'
+		}
+	];
 
 	let currentSlide = $state(0);
 	let isVisible = $state({});
@@ -130,8 +198,9 @@
 			></div>
 		{/each}
 	{:else}
-		<div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('/images/wp/hero-fallback.png');"></div>
+		<div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('{fondHero}');"></div>
 	{/if}
+	<CmsImage key="hero.fond" label="Image de fond (quand aucune actualité illustrée)" src={FOND_DEFAUT} alt="" class="hidden" />
 
 	<!-- Green overlay with gradient -->
 	<div class="absolute inset-0 bg-primary/85"></div>
@@ -153,20 +222,20 @@
 			<!-- Left Content -->
 			<div class="text-white order-2 lg:order-1">
 				<h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-[1.1] tracking-tight">
-					<span class="text-white">Le travail,</span>
+					<CmsText key="hero.titreLigne1" label="Titre — ligne 1" class="text-white">Le travail,</CmsText>
 					<br />
-					<span class="text-secondary">notre bouclier.</span>
+					<CmsText key="hero.titreLigne2" label="Titre — ligne 2 (jaune)" class="text-secondary">notre bouclier.</CmsText>
 					<br />
-					<span class="text-white/90">Ensemble</span>
-					<span class="text-white"> plus fortes.</span>
+					<CmsText key="hero.titreLigne3" label="Titre — ligne 3" class="text-white/90">Ensemble</CmsText>
+					<CmsText key="hero.titreLigne4" label="Titre — ligne 4" class="text-white">plus fortes.</CmsText>
 				</h1>
 
-				<p class="text-lg md:text-xl text-white/80 mb-8 max-w-xl leading-relaxed">
+				<CmsText key="hero.sousTitre" label="Sous-titre" tag="p" class="block text-lg md:text-xl text-white/80 mb-8 max-w-xl leading-relaxed">
 					Un creuset permanent de renforcement des liens de solidarité et d'épanouissement des femmes du Ministère en charge des Finances.
-				</p>
+				</CmsText>
 
 				<a href="#objectifs" class="group inline-flex items-center gap-2 bg-secondary hover:bg-yellow-400 text-gray-900 font-semibold py-4 px-8 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-secondary/25 hover:-translate-y-0.5">
-					Découvrir plus
+					<CmsText key="hero.bouton" label="Libellé du bouton">Découvrir plus</CmsText>
 					<svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
 					</svg>
@@ -256,12 +325,12 @@
 
 	<div class="relative container mx-auto px-4 max-w-[1300px]">
 		<div id="news-header" data-animate class="text-center mb-12 {isVisible['news-header'] ? 'animate-fade-in' : 'opacity-0'}">
-			<span class="text-primary text-sm font-semibold uppercase tracking-wider mb-4">Actualités</span>
+			<CmsText key="actualites.surTitre" label="Sur-titre" class="text-primary text-sm font-semibold uppercase tracking-wider mb-4">Actualités</CmsText>
 			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark mb-6">
-				Actualités & Initiatives
+				<CmsText key="actualites.titre" label="Titre de section">Actualités & Initiatives</CmsText>
 			</h2>
-			<a href="/actualites" class="group inline-flex items-center gap-2 text-primary-dark font-semibold hover:gap-3 transition-all">
-				Voir toutes les actualités
+			<a href="/activites" class="group inline-flex items-center gap-2 text-primary-dark font-semibold hover:gap-3 transition-all">
+				<CmsText key="actualites.lien" label="Libellé du lien">Voir toutes les actualités</CmsText>
 				<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
 				</svg>
@@ -317,9 +386,9 @@
 	<div class="relative container mx-auto px-4 max-w-[1300px]">
 		<!-- Section Header -->
 		<div id="objectives-header" data-animate class="mb-16 {isVisible['objectives-header'] ? 'animate-fade-in' : 'opacity-0'}">
-			<span class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Objectifs</span>
+			<CmsText key="objectifs.surTitre" label="Sur-titre" class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Objectifs</CmsText>
 			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark max-w-4xl leading-tight">
-				Créer un environnement de renforcement des liens de solidarité et d'épanouissement des femmes du Ministère de l'Economie et des Finances
+				<CmsText key="objectifs.titre" label="Titre de section">Créer un environnement de renforcement des liens de solidarité et d'épanouissement des femmes du Ministère de l'Economie et des Finances</CmsText>
 			</h2>
 		</div>
 
@@ -327,7 +396,9 @@
 		<div id="objectives-grid" data-animate class="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
 			<!-- Left - Sticky Image -->
 			<div class="lg:sticky lg:top-24 flex-shrink-0">
-				<img
+				<CmsImage
+					key="objectifs.image"
+					label="Image de la section"
 					src="/images/wp/objectif-image.png"
 					alt="Objectifs AFMEF"
 					class="w-[420px] max-h-[600px] object-cover object-top rounded-t-2xl rounded-b-full {isVisible['objectives-grid'] ? 'animate-fade-in' : 'opacity-0'}"
@@ -336,88 +407,25 @@
 
 			<!-- Right - Objectives List -->
 			<div class="flex-1 space-y-0">
-				<!-- Objective 1 -->
-				<div class="flex gap-4 py-6 {isVisible['objectives-grid'] ? 'animate-fade-in-up' : 'opacity-0'}" style="animation-delay: 0ms">
-					<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
-						<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-4.5A3.375 3.375 0 0012.75 10.5h-1.5A3.375 3.375 0 007.5 14.25v4.5m6-6V6.75a3 3 0 00-3-3h0a3 3 0 00-3 3v3m6 0h-6"/></svg>
+				{#each objectifs as objectif, i}
+					{#if i > 0}
+						<div class="border-b border-gray-200"></div>
+					{/if}
+					<div
+						class="flex gap-4 py-6 {isVisible['objectives-grid'] ? 'animate-fade-in-up' : 'opacity-0'}"
+						style="animation-delay: {i * 100}ms"
+					>
+						<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+							<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d={objectif.icon} /></svg>
+						</div>
+						<div>
+							<h3 class="text-2xl font-bold text-gray-900 mb-1">
+								<CmsText key="objectifs.item{i + 1}Titre" label="Objectif {i + 1} — titre">{objectif.titre}</CmsText>
+							</h3>
+							<CmsText key="objectifs.item{i + 1}Texte" label="Objectif {i + 1} — texte" tag="p" class="block text-gray-600 text-lg">{objectif.texte}</CmsText>
+						</div>
 					</div>
-					<div>
-						<h3 class="text-2xl font-bold text-gray-900 mb-1">Favoriser</h3>
-						<p class="text-gray-600 text-lg">la promotion et l'épanouissement des femmes du Ministère en charge des Finances.</p>
-					</div>
-				</div>
-				<div class="border-b border-gray-200"></div>
-
-				<!-- Objective 2 -->
-				<div class="flex gap-4 py-6 {isVisible['objectives-grid'] ? 'animate-fade-in-up' : 'opacity-0'}" style="animation-delay: 100ms">
-					<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
-						<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/></svg>
-					</div>
-					<div>
-						<h3 class="text-2xl font-bold text-gray-900 mb-1">Créer et développer</h3>
-						<p class="text-gray-600 text-lg">une ambiance de solidarité entre les femmes du Ministère en charge des Finances.</p>
-					</div>
-				</div>
-				<div class="border-b border-gray-200"></div>
-
-				<!-- Objective 3 -->
-				<div class="flex gap-4 py-6 {isVisible['objectives-grid'] ? 'animate-fade-in-up' : 'opacity-0'}" style="animation-delay: 200ms">
-					<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
-						<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46"/></svg>
-					</div>
-					<div>
-						<h3 class="text-2xl font-bold text-gray-900 mb-1">Sensibiliser</h3>
-						<p class="text-gray-600 text-lg">les femmes du MEF pour leur autonomisation et leur participation au développement et à la prospérité.</p>
-					</div>
-				</div>
-				<div class="border-b border-gray-200"></div>
-
-				<!-- Objective 4 -->
-				<div class="flex gap-4 py-6 {isVisible['objectives-grid'] ? 'animate-fade-in-up' : 'opacity-0'}" style="animation-delay: 300ms">
-					<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
-						<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
-					</div>
-					<div>
-						<h3 class="text-2xl font-bold text-gray-900 mb-1">Contribuer à lutter</h3>
-						<p class="text-gray-600 text-lg">contre la pauvreté et les fléaux socioprofessionnels.</p>
-					</div>
-				</div>
-				<div class="border-b border-gray-200"></div>
-
-				<!-- Objective 5 -->
-				<div class="flex gap-4 py-6 {isVisible['objectives-grid'] ? 'animate-fade-in-up' : 'opacity-0'}" style="animation-delay: 400ms">
-					<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
-						<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z"/></svg>
-					</div>
-					<div>
-						<h3 class="text-2xl font-bold text-gray-900 mb-1">Combattre</h3>
-						<p class="text-gray-600 text-lg">le harcèlement, les brimades, l'injustice à l'égard des femmes et assister les victimes.</p>
-					</div>
-				</div>
-				<div class="border-b border-gray-200"></div>
-
-				<!-- Objective 6 -->
-				<div class="flex gap-4 py-6 {isVisible['objectives-grid'] ? 'animate-fade-in-up' : 'opacity-0'}" style="animation-delay: 500ms">
-					<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
-						<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"/></svg>
-					</div>
-					<div>
-						<h3 class="text-2xl font-bold text-gray-900 mb-1">Représenter</h3>
-						<p class="text-gray-600 text-lg">les femmes dans les discussions avec les autorités.</p>
-					</div>
-				</div>
-				<div class="border-b border-gray-200"></div>
-
-				<!-- Objective 7 -->
-				<div class="flex gap-4 py-6 {isVisible['objectives-grid'] ? 'animate-fade-in-up' : 'opacity-0'}" style="animation-delay: 600ms">
-					<div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
-						<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"/></svg>
-					</div>
-					<div>
-						<h3 class="text-2xl font-bold text-gray-900 mb-1">Organiser</h3>
-						<p class="text-gray-600 text-lg">les manifestations de mobilisation des femmes pour leur émancipation.</p>
-					</div>
-				</div>
+				{/each}
 			</div>
 		</div>
 	</div>
@@ -425,17 +433,18 @@
 
 <!-- Values Marquee -->
 <section class="py-8 bg-primary overflow-hidden">
+	<CmsText key="valeurs.liste" label="Valeurs défilantes (séparées par des virgules)" class="hidden">{VALEURS_DEFAUT}</CmsText>
 	<div class="marquee-container">
 		<div class="marquee-scroll flex items-center" style="transform: translateX(-{scrollOffset % 1500}px)">
-			{#each ['Engagement', 'Autonomisation', 'Solidarité', 'Réussite', 'Plaidoyer', 'Leadership', 'Épanouissement', 'Excellence'] as value}
+			{#each valeurs as value}
 				<span class="text-white text-2xl md:text-4xl lg:text-5xl font-bold px-8 md:px-12 whitespace-nowrap">{value}</span>
 				<span class="text-secondary text-3xl md:text-4xl">✦</span>
 			{/each}
-			{#each ['Engagement', 'Autonomisation', 'Solidarité', 'Réussite', 'Plaidoyer', 'Leadership', 'Épanouissement', 'Excellence'] as value}
+			{#each valeurs as value}
 				<span class="text-white text-2xl md:text-4xl lg:text-5xl font-bold px-8 md:px-12 whitespace-nowrap">{value}</span>
 				<span class="text-secondary text-3xl md:text-4xl">✦</span>
 			{/each}
-			{#each ['Engagement', 'Autonomisation', 'Solidarité', 'Réussite', 'Plaidoyer', 'Leadership', 'Épanouissement', 'Excellence'] as value}
+			{#each valeurs as value}
 				<span class="text-white text-2xl md:text-4xl lg:text-5xl font-bold px-8 md:px-12 whitespace-nowrap">{value}</span>
 				<span class="text-secondary text-3xl md:text-4xl">✦</span>
 			{/each}
@@ -455,9 +464,9 @@
 
 	<div class="relative container mx-auto px-4 max-w-[1300px]">
 		<div id="activities-header" data-animate class="text-center mb-16 {isVisible['activities-header'] ? 'animate-fade-in' : 'opacity-0'}">
-			<span class="text-red-600 text-sm font-semibold uppercase tracking-wider mb-4 block">Activités</span>
+			<CmsText key="activites.surTitre" label="Sur-titre" class="text-red-600 text-sm font-semibold uppercase tracking-wider mb-4 block">Activités</CmsText>
 			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
-				Des initiatives concrètes au service de nos membres & de la communauté
+				<CmsText key="activites.titre" label="Titre de section">Des initiatives concrètes au service de nos membres & de la communauté</CmsText>
 			</h2>
 		</div>
 
@@ -471,7 +480,9 @@
 				>
 					<!-- Image with overlay -->
 					<div class="relative overflow-hidden aspect-[4/3]">
-						<img
+						<CmsImage
+							key="activites.carte{i + 1}Image"
+							label="Carte {i + 1} — image"
 							src={activity.image}
 							alt={activity.title}
 							class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
@@ -481,23 +492,25 @@
 
 						<!-- Title on image -->
 						<div class="absolute bottom-0 left-0 right-0 p-5">
-							<h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg group-hover:text-secondary transition-colors duration-300">{activity.title}</h3>
+							<h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg group-hover:text-secondary transition-colors duration-300">
+								<CmsText key="activites.carte{i + 1}Titre" label="Carte {i + 1} — titre">{activity.title}</CmsText>
+							</h3>
 						</div>
 					</div>
 
 					<!-- Content -->
 					<div class="p-5 bg-white">
 						<ul class="space-y-2 mb-4 text-gray-600">
-							{#each activity.descriptions.slice(0, 2) as desc}
+							{#each activity.descriptions.slice(0, 2) as desc, j}
 								<li class="flex gap-2 text-sm">
 									<span class="text-primary mt-0.5 flex-shrink-0">•</span>
-									<span class="line-clamp-2">{desc}</span>
+									<CmsText key="activites.carte{i + 1}Texte{j + 1}" label="Carte {i + 1} — description {j + 1}" class="line-clamp-2">{desc}</CmsText>
 								</li>
 							{/each}
 						</ul>
 
 						<div class="flex items-center gap-2 text-primary font-semibold group-hover:gap-3 transition-all">
-							<span>En savoir plus</span>
+							<CmsText key="activites.lienCartes" label="Libellé « En savoir plus » des cartes">En savoir plus</CmsText>
 							<svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
 							</svg>
@@ -512,7 +525,8 @@
 <!-- CTA Section - Same style as Hero -->
 <section class="relative py-24 md:py-32 overflow-hidden bg-primary">
 	<!-- Background image - same as hero -->
-	<div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('/images/wp/hero-fallback.png');"></div>
+	<div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('{fondCta}');"></div>
+	<CmsImage key="cta.fond" label="Image de fond du bloc final" src={FOND_DEFAUT} alt="" class="hidden" />
 
 	<!-- Green overlay -->
 	<div class="absolute inset-0 bg-primary/90"></div>
@@ -527,21 +541,21 @@
 
 	<div id="cta-section" data-animate class="relative container mx-auto px-4 max-w-[1300px] text-center {isVisible['cta-section'] ? 'animate-fade-in' : 'opacity-0'}">
 		<h2 class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-6 max-w-4xl mx-auto leading-tight">
-			Ensemble, nous sommes
-			<span class="text-secondary"> plus fortes</span>
+			<CmsText key="cta.titre" label="Titre">Ensemble, nous sommes</CmsText>
+			<CmsText key="cta.titreAccent" label="Titre — partie jaune" class="text-secondary">plus fortes</CmsText>
 		</h2>
-		<p class="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto">
+		<CmsText key="cta.texte" label="Texte" tag="p" class="block text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto">
 			Rejoignez un réseau de femmes engagées et déterminées à faire rayonner les compétences féminines au sein de notre ministère et au-delà.
-		</p>
+		</CmsText>
 		<div class="flex flex-wrap justify-center gap-4">
 			<a href="/adhesion" class="group inline-flex items-center gap-2 bg-secondary hover:bg-yellow-400 text-gray-900 font-semibold py-4 px-8 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-secondary/25 hover:-translate-y-0.5">
-				Devenir membre
+				<CmsText key="cta.bouton1" label="Bouton principal">Devenir membre</CmsText>
 				<svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
 				</svg>
 			</a>
 			<a href="/contact" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold py-4 px-8 rounded-full border border-white/20 transition-all duration-300 hover:-translate-y-0.5">
-				Nous contacter
+				<CmsText key="cta.bouton2" label="Bouton secondaire">Nous contacter</CmsText>
 			</a>
 		</div>
 	</div>

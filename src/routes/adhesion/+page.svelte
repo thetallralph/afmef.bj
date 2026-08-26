@@ -1,4 +1,6 @@
 <script>
+	import { CmsText, CmsImage } from '$lib/components/cms/index.js';
+
 	let isVisible = $state({});
 
 	const avantages = [
@@ -125,17 +127,17 @@
 		<div id="hero-content" data-animate class="text-center max-w-4xl mx-auto {isVisible['hero-content'] ? 'animate-fade-in' : 'opacity-0'}">
 			<div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
 				<span class="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
-				<span class="text-white/90 text-sm font-medium">Rejoignez-nous</span>
+				<CmsText key="hero.badge" label="Badge" class="text-white/90 text-sm font-medium">Rejoignez-nous</CmsText>
 			</div>
 
 			<h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 leading-[1.05]">
-				Devenez membre de
-				<span class="text-secondary">l'AFMEF</span>
+				<CmsText key="hero.titre" label="Titre">Devenez membre de</CmsText>
+				<CmsText key="hero.titreAccent" label="Titre — partie jaune" class="text-secondary">l'AFMEF</CmsText>
 			</h1>
 
-			<p class="text-xl md:text-2xl text-white/80 leading-relaxed max-w-3xl mx-auto">
+			<CmsText key="hero.sousTitre" label="Sous-titre" tag="p" class="block text-xl md:text-2xl text-white/80 leading-relaxed max-w-3xl mx-auto">
 				Intégrez une communauté de femmes engagées pour la solidarité, l'entraide et l'épanouissement au sein du MEF.
-			</p>
+			</CmsText>
 		</div>
 	</div>
 
@@ -143,7 +145,9 @@
 	<div class="relative z-20">
 		<div class="container mx-auto px-4 max-w-[1100px]">
 			<div class="relative rounded-t-3xl overflow-hidden shadow-2xl">
-				<img
+				<CmsImage
+					key="hero.image"
+					label="Photo principale"
 					src="/images/carousel/slide1.jpg"
 					alt="Membres de l'AFMEF réunies"
 					class="w-full h-[300px] md:h-[400px] lg:h-[450px] object-cover"
@@ -159,20 +163,20 @@
 	<div class="container mx-auto px-4 max-w-[1100px]">
 		<div id="stats" data-animate class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 {isVisible['stats'] ? 'animate-fade-in-up' : 'opacity-0'}">
 			<div class="text-center p-6 rounded-2xl bg-primary-bg">
-				<div class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-2">500+</div>
-				<p class="text-gray-600 font-medium">Membres actives</p>
+				<CmsText key="chiffres.valeur1" label="Chiffre 1 — valeur" tag="div" class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-2">500+</CmsText>
+				<CmsText key="chiffres.libelle1" label="Chiffre 1 — libellé" tag="p" class="block text-gray-600 font-medium">Membres actives</CmsText>
 			</div>
 			<div class="text-center p-6 rounded-2xl bg-primary-bg">
-				<div class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-2">3</div>
-				<p class="text-gray-600 font-medium">Années d'existence</p>
+				<CmsText key="chiffres.valeur2" label="Chiffre 2 — valeur" tag="div" class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-2">3</CmsText>
+				<CmsText key="chiffres.libelle2" label="Chiffre 2 — libellé" tag="p" class="block text-gray-600 font-medium">Années d'existence</CmsText>
 			</div>
 			<div class="text-center p-6 rounded-2xl bg-primary-bg">
-				<div class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-2">50+</div>
-				<p class="text-gray-600 font-medium">Activités organisées</p>
+				<CmsText key="chiffres.valeur3" label="Chiffre 3 — valeur" tag="div" class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-2">50+</CmsText>
+				<CmsText key="chiffres.libelle3" label="Chiffre 3 — libellé" tag="p" class="block text-gray-600 font-medium">Activités organisées</CmsText>
 			</div>
 			<div class="text-center p-6 rounded-2xl bg-secondary">
-				<div class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark mb-2">100%</div>
-				<p class="text-primary-dark/80 font-medium">Engagement</p>
+				<CmsText key="chiffres.valeur4" label="Chiffre 4 — valeur" tag="div" class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-dark mb-2">100%</CmsText>
+				<CmsText key="chiffres.libelle4" label="Chiffre 4 — libellé" tag="p" class="block text-primary-dark/80 font-medium">Engagement</CmsText>
 			</div>
 		</div>
 	</div>
@@ -185,13 +189,13 @@
 
 	<div class="relative container mx-auto px-4 max-w-[1300px]">
 		<div id="avantages-header" data-animate class="text-center mb-16 {isVisible['avantages-header'] ? 'animate-fade-in' : 'opacity-0'}">
-			<span class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Pourquoi nous rejoindre</span>
+			<CmsText key="avantages.surTitre" label="Sur-titre" class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Pourquoi nous rejoindre</CmsText>
 			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-				Les avantages de l'adhésion
+				<CmsText key="avantages.titre" label="Titre de section">Les avantages de l'adhésion</CmsText>
 			</h2>
-			<p class="text-gray-600 text-lg max-w-2xl mx-auto">
+			<CmsText key="avantages.texte" label="Texte d'introduction" tag="p" class="block text-gray-600 text-lg max-w-2xl mx-auto">
 				En devenant membre de l'AFMEF, vous bénéficiez de nombreux avantages qui contribueront à votre épanouissement personnel et professionnel.
-			</p>
+			</CmsText>
 		</div>
 
 		<div id="avantages-grid" data-animate class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 {isVisible['avantages-grid'] ? 'animate-fade-in-up' : 'opacity-0'}">
@@ -227,8 +231,10 @@
 							</svg>
 						{/if}
 					</div>
-					<h3 class="text-xl font-bold text-gray-900 mb-3">{avantage.title}</h3>
-					<p class="text-gray-600 leading-relaxed">{avantage.description}</p>
+					<h3 class="text-xl font-bold text-gray-900 mb-3">
+						<CmsText key="avantages.carte{i + 1}Titre" label="Avantage {i + 1} — titre">{avantage.title}</CmsText>
+					</h3>
+					<CmsText key="avantages.carte{i + 1}Texte" label="Avantage {i + 1} — texte" tag="p" class="block text-gray-600 leading-relaxed">{avantage.description}</CmsText>
 				</div>
 			{/each}
 		</div>
@@ -237,7 +243,9 @@
 
 <!-- Image Banner -->
 <section class="relative h-[300px] md:h-[400px] overflow-hidden">
-	<img
+	<CmsImage
+		key="bandeau.image"
+		label="Image du bandeau"
 		src="/images/carousel/slide3.jpg"
 		alt="Activités AFMEF"
 		class="w-full h-full object-cover"
@@ -245,8 +253,10 @@
 	<div class="absolute inset-0 bg-primary/70"></div>
 	<div class="absolute inset-0 flex items-center justify-center">
 		<div class="text-center text-white px-4">
-			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Ensemble, plus fortes</h2>
-			<p class="text-xl text-white/90 max-w-2xl mx-auto">Le travail, notre bouclier</p>
+			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+				<CmsText key="bandeau.titre" label="Titre du bandeau">Ensemble, plus fortes</CmsText>
+			</h2>
+			<CmsText key="bandeau.sousTitre" label="Sous-titre du bandeau" tag="p" class="block text-xl text-white/90 max-w-2xl mx-auto">Le travail, notre bouclier</CmsText>
 		</div>
 	</div>
 </section>
@@ -255,13 +265,13 @@
 <section id="conditions" class="py-20 md:py-28 bg-primary-bg relative overflow-hidden">
 	<div class="relative container mx-auto px-4 max-w-[1300px]">
 		<div id="conditions-header" data-animate class="text-center mb-16 {isVisible['conditions-header'] ? 'animate-fade-in' : 'opacity-0'}">
-			<span class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Éligibilité</span>
+			<CmsText key="conditions.surTitre" label="Sur-titre" class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Éligibilité</CmsText>
 			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-				Conditions d'adhésion
+				<CmsText key="conditions.titre" label="Titre de section">Conditions d'adhésion</CmsText>
 			</h2>
-			<p class="text-gray-600 text-lg max-w-2xl mx-auto">
+			<CmsText key="conditions.texte" label="Texte d'introduction" tag="p" class="block text-gray-600 text-lg max-w-2xl mx-auto">
 				Pour rejoindre l'AFMEF, vous devez remplir les conditions suivantes.
-			</p>
+			</CmsText>
 		</div>
 
 		<div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
@@ -273,8 +283,10 @@
 							<span class="text-xl font-bold text-white">{condition.number}</span>
 						</div>
 						<div class="pt-1">
-							<h3 class="text-xl font-bold text-gray-900 mb-2">{condition.title}</h3>
-							<p class="text-gray-600">{condition.description}</p>
+							<h3 class="text-xl font-bold text-gray-900 mb-2">
+								<CmsText key="conditions.item{i + 1}Titre" label="Condition {i + 1} — titre">{condition.title}</CmsText>
+							</h3>
+							<CmsText key="conditions.item{i + 1}Texte" label="Condition {i + 1} — texte" tag="p" class="block text-gray-600">{condition.description}</CmsText>
 						</div>
 					</div>
 				{/each}
@@ -283,7 +295,9 @@
 			<!-- Right - Image -->
 			<div id="conditions-image" data-animate class="relative lg:sticky lg:top-32 {isVisible['conditions-image'] ? 'animate-fade-in' : 'opacity-0'}" style="animation-delay: 200ms">
 				<div class="relative rounded-3xl overflow-hidden shadow-2xl">
-					<img
+					<CmsImage
+						key="conditions.image"
+						label="Image de la section"
 						src="/images/carousel/slide5.jpg"
 						alt="Membres de l'AFMEF"
 						class="w-full h-[400px] lg:h-[500px] object-cover"
@@ -292,11 +306,11 @@
 					<div class="absolute bottom-0 left-0 right-0 p-8">
 						<div class="flex items-center gap-3 mb-3">
 							<div class="w-10 h-1 bg-secondary rounded-full"></div>
-							<span class="text-secondary text-sm font-semibold uppercase tracking-wider">Notre devise</span>
+							<CmsText key="conditions.deviseLabel" label="Étiquette « Notre devise »" class="text-secondary text-sm font-semibold uppercase tracking-wider">Notre devise</CmsText>
 						</div>
-						<p class="text-white text-2xl font-semibold">
+						<CmsText key="conditions.devise" label="Devise" tag="p" class="block text-white text-2xl font-semibold">
 							"Ensemble, nous sommes plus fortes"
-						</p>
+						</CmsText>
 					</div>
 				</div>
 			</div>
@@ -308,13 +322,13 @@
 <section class="py-20 md:py-28 bg-white relative overflow-hidden">
 	<div class="container mx-auto px-4 max-w-[1300px]">
 		<div id="process-header" data-animate class="text-center mb-16 {isVisible['process-header'] ? 'animate-fade-in' : 'opacity-0'}">
-			<span class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Processus</span>
+			<CmsText key="processus.surTitre" label="Sur-titre" class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Processus</CmsText>
 			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-				Comment adhérer ?
+				<CmsText key="processus.titre" label="Titre de section">Comment adhérer ?</CmsText>
 			</h2>
-			<p class="text-gray-600 text-lg max-w-2xl mx-auto">
+			<CmsText key="processus.texte" label="Texte d'introduction" tag="p" class="block text-gray-600 text-lg max-w-2xl mx-auto">
 				Suivez ces étapes simples pour devenir membre de l'AFMEF.
-			</p>
+			</CmsText>
 		</div>
 
 		<div id="process-steps" data-animate class="relative {isVisible['process-steps'] ? 'animate-fade-in-up' : 'opacity-0'}">
@@ -349,8 +363,10 @@
 									</svg>
 								{/if}
 							</div>
-							<h3 class="text-lg font-bold text-gray-900 mb-3">{step.title}</h3>
-							<p class="text-gray-600 text-sm">{step.description}</p>
+							<h3 class="text-lg font-bold text-gray-900 mb-3">
+								<CmsText key="processus.etape{i + 1}Titre" label="Étape {i + 1} — titre">{step.title}</CmsText>
+							</h3>
+							<CmsText key="processus.etape{i + 1}Texte" label="Étape {i + 1} — texte" tag="p" class="block text-gray-600 text-sm">{step.description}</CmsText>
 						</div>
 					</div>
 				{/each}
@@ -369,7 +385,9 @@
 			<div class="grid md:grid-cols-2">
 				<!-- Left - Image -->
 				<div class="relative h-[250px] md:h-auto">
-					<img
+					<CmsImage
+						key="cotisation.image"
+						label="Image de la section"
 						src="/images/carousel/slide7.jpg"
 						alt="Membres AFMEF"
 						class="w-full h-full object-cover"
@@ -379,18 +397,19 @@
 
 				<!-- Right - Content -->
 				<div class="p-8 md:p-12">
-					<span class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Cotisation</span>
+					<CmsText key="cotisation.surTitre" label="Sur-titre" class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Cotisation</CmsText>
 					<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-						Cotisation annuelle
+						<CmsText key="cotisation.titre" label="Titre de section">Cotisation annuelle</CmsText>
 					</h2>
-					<p class="text-gray-600 mb-6">
+					<CmsText key="cotisation.texte" label="Texte" tag="p" class="block text-gray-600 mb-6">
 						Les cotisations permettent de financer les activités de l'Amicale et d'assurer son bon fonctionnement.
-					</p>
+					</CmsText>
 
 					<div class="bg-primary-bg rounded-2xl p-6 mb-6">
-						<p class="text-gray-600 text-sm mb-1">Montant annuel</p>
+						<CmsText key="cotisation.montantLabel" label="Libellé du montant" tag="p" class="block text-gray-600 text-sm mb-1">Montant annuel</CmsText>
 						<div class="text-4xl md:text-5xl font-bold text-primary">
-							10 000 <span class="text-xl">FCFA</span>
+							<CmsText key="cotisation.montant" label="Montant">10 000</CmsText>
+							<CmsText key="cotisation.devise" label="Devise du montant" class="text-xl">FCFA</CmsText>
 						</div>
 					</div>
 
@@ -399,19 +418,19 @@
 							<svg class="w-5 h-5 text-primary flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 								<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
 							</svg>
-							<span class="text-gray-700">Accès à toutes les activités</span>
+							<CmsText key="cotisation.avantage1" label="Avantage inclus 1" class="text-gray-700">Accès à toutes les activités</CmsText>
 						</li>
 						<li class="flex items-center gap-3">
 							<svg class="w-5 h-5 text-primary flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 								<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
 							</svg>
-							<span class="text-gray-700">Participation aux formations</span>
+							<CmsText key="cotisation.avantage2" label="Avantage inclus 2" class="text-gray-700">Participation aux formations</CmsText>
 						</li>
 						<li class="flex items-center gap-3">
 							<svg class="w-5 h-5 text-primary flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 								<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
 							</svg>
-							<span class="text-gray-700">Droit de vote à l'Assemblée Générale</span>
+							<CmsText key="cotisation.avantage3" label="Avantage inclus 3" class="text-gray-700">Droit de vote à l'Assemblée Générale</CmsText>
 						</li>
 					</ul>
 				</div>
@@ -424,7 +443,9 @@
 <section class="relative py-24 md:py-32 overflow-hidden bg-primary">
 	<!-- Background Image -->
 	<div class="absolute inset-0">
-		<img
+		<CmsImage
+			key="cta.image"
+			label="Image de fond"
 			src="/images/carousel/slide2.jpg"
 			alt=""
 			class="w-full h-full object-cover opacity-20"
@@ -441,15 +462,15 @@
 
 	<div id="cta-section" data-animate class="relative container mx-auto px-4 max-w-[1300px] text-center {isVisible['cta-section'] ? 'animate-fade-in' : 'opacity-0'}">
 		<h2 class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-6 max-w-4xl mx-auto leading-tight">
-			Prête à rejoindre la
-			<span class="text-secondary">famille AFMEF</span> ?
+			<CmsText key="cta.titre" label="Titre">Prête à rejoindre la</CmsText>
+			<CmsText key="cta.titreAccent" label="Titre — partie jaune" class="text-secondary">famille AFMEF</CmsText> ?
 		</h2>
-		<p class="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto">
+		<CmsText key="cta.texte" label="Texte" tag="p" class="block text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto">
 			Créez votre compte en quelques minutes et rejoignez notre communauté de femmes engagées.
-		</p>
+		</CmsText>
 		<div class="flex flex-wrap justify-center gap-4">
 			<a href="/espace-membre/inscription" class="group inline-flex items-center gap-2 bg-secondary hover:bg-yellow-400 text-gray-900 font-semibold py-4 px-8 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-secondary/25 hover:-translate-y-0.5">
-				S'inscrire maintenant
+				<CmsText key="cta.bouton1" label="Bouton principal">S'inscrire maintenant</CmsText>
 				<svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
 				</svg>
@@ -458,7 +479,7 @@
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
 				</svg>
-				Déjà membre ? Se connecter
+				<CmsText key="cta.bouton2" label="Bouton secondaire">Déjà membre ? Se connecter</CmsText>
 			</a>
 		</div>
 	</div>

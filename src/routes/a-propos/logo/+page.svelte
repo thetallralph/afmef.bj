@@ -1,6 +1,7 @@
 <script>
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import AboutNavLinks from '$lib/components/AboutNavLinks.svelte';
+	import { CmsText, CmsImage } from '$lib/components/cms/index.js';
 
 	let isVisible = $state({});
 
@@ -64,7 +65,9 @@
 			<div class="flex justify-center">
 				<div class="relative">
 					<div class="absolute -inset-8 bg-gradient-to-br from-primary/10 via-secondary/10 to-red-100 rounded-full blur-2xl"></div>
-					<img
+					<CmsImage
+						key="logo.image"
+						label="Visuel du logo"
 						src="/images/wp/logo-histoire.png"
 						alt="Logo AFMEF"
 						class="relative w-full max-w-md"
@@ -74,11 +77,13 @@
 
 			<!-- Description -->
 			<div>
-				<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8">Symbolisme du Logo</h2>
+				<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+					<CmsText key="symbolisme.titre" label="Titre de section">Symbolisme du Logo</CmsText>
+				</h2>
 
-				<p class="text-lg text-gray-600 mb-8">
+				<CmsText key="symbolisme.intro" label="Paragraphe d'introduction" tag="p" class="block text-lg text-gray-600 mb-8">
 					Le logo type de l'Amicale symbolise l'esprit de solidarité à travers une illustration abstraite et harmonieuse de trois figures féminines enlacées. Chacune portant fièrement les couleurs nationales qui s'apparentent aux qualités intrinsèques de la femme béninoise dans toute sa diversité, notamment :
-				</p>
+				</CmsText>
 
 				<div class="space-y-4 mb-8">
 					{#each colors as item, i}
@@ -91,16 +96,21 @@
 							</div>
 							<div>
 								<h3 class="font-bold {item.textClass} capitalize mb-1">Le {item.color}</h3>
-								<p class="{item.textClass} opacity-90">pour {item.meaning}</p>
+								<CmsText
+									key="symbolisme.couleur{i + 1}"
+									label="Couleur {i + 1} — signification"
+									tag="p"
+									class="block {item.textClass} opacity-90"
+								>pour {item.meaning}</CmsText>
 							</div>
 						</div>
 					{/each}
 				</div>
 
 				<div class="p-6 bg-primary-bg rounded-xl border-l-4 border-primary">
-					<p class="text-gray-700 italic">
+					<CmsText key="symbolisme.encadre" label="Encadré final" tag="p" class="block text-gray-700 italic">
 						Les trois figures portent une couronne protectrice pour représenter l'Amicale.
-					</p>
+					</CmsText>
 				</div>
 			</div>
 		</div>

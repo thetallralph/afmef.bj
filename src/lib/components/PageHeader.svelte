@@ -1,5 +1,11 @@
 <script>
-	let { title, subtitle, badge = "À propos" } = $props();
+	import { CmsText } from '$lib/components/cms/index.js';
+
+	/**
+	 * Bandeau de titre des pages internes. Les trois textes sont éditables depuis
+	 * /gestion/contenu sous les clés « entete.* ».
+	 */
+	let { title, subtitle, badge = 'À propos' } = $props();
 </script>
 
 <section class="relative bg-primary py-16 md:py-24 overflow-hidden">
@@ -12,14 +18,21 @@
 
 	<div class="relative container mx-auto px-4 max-w-[1300px]">
 		<div class="text-center max-w-3xl mx-auto animate-fade-in">
-			<span class="text-secondary text-sm font-semibold uppercase tracking-wider mb-4 block">{badge}</span>
+			<CmsText
+				key="entete.surTitre"
+				label="Bandeau — sur-titre"
+				class="text-secondary text-sm font-semibold uppercase tracking-wider mb-4 block"
+			>{badge}</CmsText>
 			<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-[1.1]">
-				{title}
+				<CmsText key="entete.titre" label="Bandeau — titre">{title}</CmsText>
 			</h1>
 			{#if subtitle}
-				<p class="text-lg md:text-xl text-white/80 leading-relaxed">
-					{subtitle}
-				</p>
+				<CmsText
+					key="entete.sousTitre"
+					label="Bandeau — sous-titre"
+					tag="p"
+					class="block text-lg md:text-xl text-white/80 leading-relaxed"
+				>{subtitle}</CmsText>
 			{/if}
 		</div>
 	</div>

@@ -1,4 +1,6 @@
 <script>
+	import { CmsText } from '$lib/components/cms/index.js';
+
 	let isVisible = $state({});
 	let formData = $state({
 		nom: '',
@@ -71,14 +73,14 @@
 
 	<div class="relative container mx-auto px-4 max-w-[1300px] pt-20 md:pt-28 pb-16 md:pb-24">
 		<div id="hero-content" data-animate class="text-center max-w-3xl mx-auto {isVisible['hero-content'] ? 'animate-fade-in' : 'opacity-0'}">
-			<span class="text-secondary text-sm font-semibold uppercase tracking-wider mb-4 block">Contact</span>
+			<CmsText key="hero.surTitre" label="Sur-titre" class="text-secondary text-sm font-semibold uppercase tracking-wider mb-4 block">Contact</CmsText>
 			<h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 leading-[1.05]">
-				Restons en
-				<span class="text-secondary">contact</span>
+				<CmsText key="hero.titre" label="Titre">Restons en</CmsText>
+				<CmsText key="hero.titreAccent" label="Titre — partie jaune" class="text-secondary">contact</CmsText>
 			</h1>
-			<p class="text-xl md:text-2xl text-white/80 leading-relaxed">
+			<CmsText key="hero.sousTitre" label="Sous-titre" tag="p" class="block text-xl md:text-2xl text-white/80 leading-relaxed">
 				Une question ou envie de nous rejoindre ? N'hésitez pas à nous écrire.
-			</p>
+			</CmsText>
 		</div>
 	</div>
 </section>
@@ -94,8 +96,10 @@
 			<div id="contact-form" data-animate class="lg:col-span-3 {isVisible['contact-form'] ? 'animate-fade-in' : 'opacity-0'}">
 				<div class="bg-white rounded-3xl p-8 md:p-10 shadow-xl">
 					<div class="mb-8">
-						<h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-3">Envoyez-nous un message</h2>
-						<p class="text-gray-600">Nous vous répondrons dans les plus brefs délais.</p>
+						<h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+							<CmsText key="formulaire.titre" label="Titre du formulaire">Envoyez-nous un message</CmsText>
+						</h2>
+						<CmsText key="formulaire.sousTitre" label="Sous-titre du formulaire" tag="p" class="block text-gray-600">Nous vous répondrons dans les plus brefs délais.</CmsText>
 					</div>
 
 					{#if submitStatus === 'success'}
@@ -105,8 +109,10 @@
 									<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
 								</svg>
 							</div>
-							<h3 class="text-xl font-bold text-gray-900 mb-2">Message envoyé !</h3>
-							<p class="text-gray-600">Merci pour votre message.</p>
+							<h3 class="text-xl font-bold text-gray-900 mb-2">
+								<CmsText key="formulaire.confirmationTitre" label="Confirmation — titre">Message envoyé !</CmsText>
+							</h3>
+							<CmsText key="formulaire.confirmationTexte" label="Confirmation — texte" tag="p" class="block text-gray-600">Merci pour votre message.</CmsText>
 						</div>
 					{:else}
 						<form onsubmit={handleSubmit} class="space-y-5">
@@ -215,7 +221,9 @@
 			<div id="contact-info" data-animate class="lg:col-span-2 space-y-6 {isVisible['contact-info'] ? 'animate-fade-in' : 'opacity-0'}" style="animation-delay: 200ms">
 				<!-- Direct Contact -->
 				<div class="bg-white rounded-2xl p-6 shadow-lg">
-					<h3 class="text-xl font-bold text-gray-900 mb-5">Contactez-nous directement</h3>
+					<h3 class="text-xl font-bold text-gray-900 mb-5">
+						<CmsText key="coordonnees.titre" label="Titre du bloc coordonnées">Contactez-nous directement</CmsText>
+					</h3>
 
 					<div class="space-y-4">
 						<a href="tel:+2290147474707" class="flex items-center gap-4 p-3 rounded-xl hover:bg-primary-bg transition-colors group">
@@ -225,8 +233,8 @@
 								</svg>
 							</div>
 							<div>
-								<p class="text-sm text-gray-500">Téléphone</p>
-								<p class="font-semibold text-gray-900">+229 01 47 47 47 07</p>
+								<CmsText key="coordonnees.telephoneLabel" label="Libellé « Téléphone »" tag="p" class="block text-sm text-gray-500">Téléphone</CmsText>
+								<CmsText key="coordonnees.telephone" label="Numéro de téléphone affiché" tag="p" class="block font-semibold text-gray-900">+229 01 47 47 47 07</CmsText>
 							</div>
 						</a>
 
@@ -237,8 +245,8 @@
 								</svg>
 							</div>
 							<div>
-								<p class="text-sm text-gray-500">Email</p>
-								<p class="font-semibold text-gray-900">contact@afmef.bj</p>
+								<CmsText key="coordonnees.emailLabel" label="Libellé « Email »" tag="p" class="block text-sm text-gray-500">Email</CmsText>
+								<CmsText key="coordonnees.email" label="Adresse e-mail affichée" tag="p" class="block font-semibold text-gray-900">contact@afmef.bj</CmsText>
 							</div>
 						</a>
 					</div>
@@ -246,7 +254,9 @@
 
 				<!-- Social Media -->
 				<div class="bg-white rounded-2xl p-6 shadow-lg">
-					<h3 class="text-xl font-bold text-gray-900 mb-5">Suivez-nous</h3>
+					<h3 class="text-xl font-bold text-gray-900 mb-5">
+						<CmsText key="reseaux.titre" label="Titre du bloc réseaux sociaux">Suivez-nous</CmsText>
+					</h3>
 
 					<div class="space-y-3">
 						<a href="https://www.facebook.com/profile.php?id=61560847287467" target="_blank" rel="noopener" class="flex items-center gap-4 p-3 rounded-xl hover:bg-[#1877F2]/10 transition-colors group">
@@ -290,13 +300,13 @@
 
 	<div id="cta-section" data-animate class="relative container mx-auto px-4 max-w-[900px] text-center {isVisible['cta-section'] ? 'animate-fade-in' : 'opacity-0'}">
 		<h2 class="text-3xl md:text-4xl font-bold text-primary-dark mb-4">
-			Prête à rejoindre notre communauté ?
+			<CmsText key="cta.titre" label="Titre">Prête à rejoindre notre communauté ?</CmsText>
 		</h2>
-		<p class="text-lg text-primary-dark/70 mb-8 max-w-xl mx-auto">
+		<CmsText key="cta.texte" label="Texte" tag="p" class="block text-lg text-primary-dark/70 mb-8 max-w-xl mx-auto">
 			Devenez membre de l'AFMEF et participez à l'épanouissement des femmes du MEF.
-		</p>
+		</CmsText>
 		<a href="/adhesion" class="group inline-flex items-center gap-2 bg-primary hover:bg-primary-light text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-0.5">
-			Devenir membre
+			<CmsText key="cta.bouton" label="Libellé du bouton">Devenir membre</CmsText>
 			<svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
 			</svg>

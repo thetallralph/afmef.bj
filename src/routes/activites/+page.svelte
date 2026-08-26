@@ -1,4 +1,5 @@
 <script>
+	import { CmsText } from '$lib/components/cms/index.js';
 	import { onMount, onDestroy } from 'svelte';
 	import { page } from '$app/stores';
 	import { getActivites, getTypesActivites } from '$lib/services/pocketbase-content.js';
@@ -182,13 +183,13 @@
 
 	<div class="relative container mx-auto px-4 max-w-[1300px] py-16 md:py-20">
 		<div class="text-center max-w-3xl mx-auto">
-			<span class="text-secondary text-sm font-semibold uppercase tracking-wider mb-4 block">Nos Activités</span>
+			<CmsText key="hero.surTitre" label="Sur-titre" class="text-secondary text-sm font-semibold uppercase tracking-wider mb-4 block">Nos Activités</CmsText>
 			<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-				Vie de l'Association
+				<CmsText key="hero.titre" label="Titre">Vie de l'Association</CmsText>
 			</h1>
-			<p class="text-xl text-white/80 leading-relaxed">
+			<CmsText key="hero.sousTitre" label="Sous-titre" tag="p" class="block text-xl text-white/80 leading-relaxed">
 				Découvrez les activités et actualités de l'AFMEF : actions sociales, sensibilisation, célébrations et renforcement de capacités.
-			</p>
+			</CmsText>
 		</div>
 	</div>
 </section>
@@ -198,7 +199,9 @@
 	<div class="container mx-auto px-4 max-w-[1300px]">
 		<!-- Titre de section -->
 		<div class="mb-6">
-			<h2 class="text-2xl md:text-3xl font-bold text-gray-900">À la une</h2>
+			<h2 class="text-2xl md:text-3xl font-bold text-gray-900">
+				<CmsText key="sections.aLaUne" label="Titre « À la une »">À la une</CmsText>
+			</h2>
 			<div class="w-16 h-1 bg-primary mt-3 rounded-full"></div>
 		</div>
 
@@ -341,7 +344,9 @@
 <section class="py-12 md:py-16 bg-gray-50">
 	<div class="container mx-auto px-4 max-w-[1300px]">
 		<div class="mb-8">
-			<h2 class="text-2xl md:text-3xl font-bold text-gray-900">Toutes les activités récentes</h2>
+			<h2 class="text-2xl md:text-3xl font-bold text-gray-900">
+				<CmsText key="sections.recentes" label="Titre « Toutes les activités récentes »">Toutes les activités récentes</CmsText>
+			</h2>
 			<div class="w-16 h-1 bg-primary mt-3 rounded-full"></div>
 		</div>
 

@@ -1,8 +1,10 @@
 import { error, fail, redirect } from '@sveltejs/kit';
 import { getMemberById, updateMember, getCotisations, createCotisation } from '$lib/services/auth.js';
+import { getPbAdmin } from '$lib/server/pb-admin.js';
 
-export async function load({ locals, params }) {
-	const member = await getMemberById(locals.pb, params.id);
+export async function load({ params }) {
+	const pb = await getPbAdmin();
+	const member = await getMemberById(pb, params.id);
 
 	if (!member) {
 		throw error(404, 'Membre non trouvé');
@@ -11,7 +13,7 @@ export async function load({ locals, params }) {
 	// Récupérer les cotisations de ce membre
 	let cotisations = [];
 	try {
-		const result = await locals.pb.collection('cotisations').getList(1, 50, {
+		const result = await pb.collection('cotisations').getList(1, 50, {
 			filter: `user = "${params.id}"`,
 			sort: '-year'
 		});
@@ -24,7 +26,8 @@ export async function load({ locals, params }) {
 }
 
 export const actions = {
-	update: async ({ request, locals, params }) => {
+	update: async ({ request, params }) => {
+		const pb = await getPbAdmin();
 		const formData = await request.formData();
 
 		const data = {
@@ -44,7 +47,7 @@ export const actions = {
 			return fail(400, { error: 'Le nom est requis' });
 		}
 
-		const result = await updateMember(locals.pb, params.id, data);
+		const result = await updateMember(pb, params.id, data);
 
 		if (!result.success) {
 			return fail(400, { error: result.error });
@@ -53,7 +56,8 @@ export const actions = {
 		return { success: true };
 	},
 
-	addCotisation: async ({ request, locals, params }) => {
+	addCotisation: async ({ request, params }) => {
+		const pb = await getPbAdmin();
 		const formData = await request.formData();
 
 		const data = {
@@ -69,7 +73,7 @@ export const actions = {
 			return fail(400, { cotisationError: 'Année et montant requis' });
 		}
 
-		const result = await createCotisation(locals.pb, data);
+		const result = await createCotisation(pb, data);
 
 		if (!result.success) {
 			return fail(400, { cotisationError: result.error });

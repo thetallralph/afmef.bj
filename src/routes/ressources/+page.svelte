@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { CmsText } from '$lib/components/cms/index.js';
 	import { getRessources } from '$lib/services/pocketbase-content.js';
 
 	// État de chargement
@@ -95,13 +96,13 @@
 
 	<div class="relative container mx-auto px-4 max-w-[1300px] py-16 md:py-20">
 		<div class="text-center max-w-3xl mx-auto">
-			<span class="text-secondary text-sm font-semibold uppercase tracking-wider mb-4 block">Documentation</span>
+			<CmsText key="hero.surTitre" label="Sur-titre" class="text-secondary text-sm font-semibold uppercase tracking-wider mb-4 block">Documentation</CmsText>
 			<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-				Ressources
+				<CmsText key="hero.titre" label="Titre">Ressources</CmsText>
 			</h1>
-			<p class="text-xl text-white/80 leading-relaxed">
+			<CmsText key="hero.sousTitre" label="Sous-titre" tag="p" class="block text-xl text-white/80 leading-relaxed">
 				Retrouvez tous les documents officiels, rapports, formulaires et guides de l'AFMEF.
-			</p>
+			</CmsText>
 		</div>
 	</div>
 </section>
@@ -207,8 +208,10 @@
 						<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m6.75 12H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
 					</svg>
 				</div>
-				<h3 class="text-lg font-semibold text-gray-900 mb-2">Aucune ressource disponible</h3>
-				<p class="text-gray-600">Les ressources seront bientôt disponibles.</p>
+				<h3 class="text-lg font-semibold text-gray-900 mb-2">
+					<CmsText key="vide.titre" label="Message si aucune ressource — titre">Aucune ressource disponible</CmsText>
+				</h3>
+				<CmsText key="vide.texte" label="Message si aucune ressource — texte" tag="p" class="block text-gray-600">Les ressources seront bientôt disponibles.</CmsText>
 			</div>
 		{/if}
 	</div>
@@ -219,13 +222,13 @@
 	<div class="container mx-auto px-4 max-w-[900px]">
 		<div class="text-center">
 			<h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-				Vous ne trouvez pas ce que vous cherchez ?
+				<CmsText key="cta.titre" label="Titre">Vous ne trouvez pas ce que vous cherchez ?</CmsText>
 			</h2>
-			<p class="text-gray-600 mb-8 max-w-xl mx-auto">
+			<CmsText key="cta.texte" label="Texte" tag="p" class="block text-gray-600 mb-8 max-w-xl mx-auto">
 				Contactez-nous et nous vous aiderons à trouver les informations dont vous avez besoin.
-			</p>
+			</CmsText>
 			<a href="/contact" class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-8 rounded-full transition-all duration-300">
-				Nous contacter
+				<CmsText key="cta.bouton" label="Libellé du bouton">Nous contacter</CmsText>
 				<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
 				</svg>

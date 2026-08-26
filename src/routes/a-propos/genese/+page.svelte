@@ -1,5 +1,6 @@
 <script>
 	import AboutNavLinks from '$lib/components/AboutNavLinks.svelte';
+	import { CmsText, CmsRichText, CmsImage } from '$lib/components/cms/index.js';
 
 	let isVisible = $state({});
 
@@ -47,19 +48,21 @@
 		<div id="hero-content" data-animate class="text-center max-w-4xl mx-auto {isVisible['hero-content'] ? 'animate-fade-in' : 'opacity-0'}">
 
 			<h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 leading-[1.05]">
-				Genèse
+				<CmsText key="hero.titre" label="Titre">Genèse</CmsText>
 			</h1>
 
-			<p class="text-xl md:text-2xl text-white/90 leading-relaxed max-w-3xl mx-auto mb-8">
+			<CmsText key="hero.sousTitre" label="Sous-titre" tag="p" class="block text-xl md:text-2xl text-white/90 leading-relaxed max-w-3xl mx-auto mb-8">
 				Une Aventure Collective au Service de l'Épanouissement des Femmes du MEF
-			</p>
+			</CmsText>
 		</div>
 	</div>
 
 	<!-- Overlapping Image Container -->
 	<div class="relative z-20">
 		<div class="container mx-auto px-4 max-w-[1100px]">
-			<img
+			<CmsImage
+				key="hero.image"
+				label="Photo principale"
 				src="/images/wp/hero-about.png"
 				alt="AFMEF - Assemblée Générale Constitutive"
 				class="w-full h-auto relative z-10"
@@ -77,12 +80,12 @@
 					<path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
 				</svg>
 			</div>
-			<p class="text-2xl md:text-3xl lg:text-4xl text-gray-800 leading-relaxed font-light">
+			<CmsRichText key="intro.texte" label="Phrase d'ouverture" class="cms-prose text-2xl md:text-3xl lg:text-4xl text-gray-800 leading-relaxed font-light">
 				L'Amicale des Femmes du Ministère en charge des Finances est née de
 				<span class="text-primary font-semibold">l'ambition des femmes</span>
 				de s'organiser pour renforcer les liens de solidarité et travailler ensemble pour leur
 				<span class="text-primary font-semibold">épanouissement individuel et collectif</span>.
-			</p>
+			</CmsRichText>
 		</div>
 	</div>
 </section>
@@ -95,8 +98,10 @@
 
 	<div class="relative container mx-auto px-4 max-w-[1300px]">
 		<div id="timeline-header" data-animate class="text-center mb-16 {isVisible['timeline-header'] ? 'animate-fade-in' : 'opacity-0'}">
-			<span class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Chronologie</span>
-			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">Les Étapes Clés</h2>
+			<CmsText key="chronologie.surTitre" label="Sur-titre" class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Chronologie</CmsText>
+			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
+				<CmsText key="chronologie.titre" label="Titre de section">Les Étapes Clés</CmsText>
+			</h2>
 		</div>
 
 		<!-- Timeline -->
@@ -109,11 +114,13 @@
 				<!-- Left Content -->
 				<div class="lg:w-1/2 lg:text-right lg:pr-16">
 					<div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow duration-300">
-						<span class="inline-block px-4 py-1 bg-primary text-white text-sm font-bold rounded-full mb-4">2022</span>
-						<h3 class="text-2xl font-bold text-gray-900 mb-4">L'Initiative</h3>
-						<p class="text-gray-600 leading-relaxed">
+						<CmsText key="chronologie.jalon1Date" label="Jalon 1 — date" class="inline-block px-4 py-1 bg-primary text-white text-sm font-bold rounded-full mb-4">2022</CmsText>
+						<h3 class="text-2xl font-bold text-gray-900 mb-4">
+							<CmsText key="chronologie.jalon1Titre" label="Jalon 1 — titre">L'Initiative</CmsText>
+						</h3>
+						<CmsRichText key="chronologie.jalon1Texte" label="Jalon 1 — texte" class="cms-prose text-gray-600 leading-relaxed">
 							Encouragée et soutenue fortement par le Ministre d'État, Monsieur <strong class="text-gray-900">Romuald WADAGNI</strong>, cette noble initiative s'est concrétisée après plusieurs mois de travaux préparatoires sous le leadership éclairé de la Secrétaire Générale Adjointe du Ministère.
-						</p>
+						</CmsRichText>
 					</div>
 				</div>
 
@@ -139,11 +146,13 @@
 				<!-- Right Content -->
 				<div class="lg:w-1/2 lg:pl-16">
 					<div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow duration-300">
-						<span class="inline-block px-4 py-1 bg-secondary text-primary-dark text-sm font-bold rounded-full mb-4">26 Nov 2022</span>
-						<h3 class="text-2xl font-bold text-gray-900 mb-4">L'Assemblée Générale Constitutive</h3>
-						<p class="text-gray-600 leading-relaxed">
+						<CmsText key="chronologie.jalon2Date" label="Jalon 2 — date" class="inline-block px-4 py-1 bg-secondary text-primary-dark text-sm font-bold rounded-full mb-4">26 Nov 2022</CmsText>
+						<h3 class="text-2xl font-bold text-gray-900 mb-4">
+							<CmsText key="chronologie.jalon2Titre" label="Jalon 2 — titre">L'Assemblée Générale Constitutive</CmsText>
+						</h3>
+						<CmsRichText key="chronologie.jalon2Texte" label="Jalon 2 — texte" class="cms-prose text-gray-600 leading-relaxed">
 							Organisation de l'Assemblée Générale Constitutive à Cotonou avec la <strong class="text-gray-900">participation massive des femmes</strong> du ministère en charge des finances venues de l'ensemble du territoire national.
-						</p>
+						</CmsRichText>
 					</div>
 				</div>
 			</div>
@@ -153,11 +162,13 @@
 				<!-- Left Content -->
 				<div class="lg:w-1/2 lg:text-right lg:pr-16">
 					<div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow duration-300">
-						<span class="inline-block px-4 py-1 bg-primary text-white text-sm font-bold rounded-full mb-4">2022-2024</span>
-						<h3 class="text-2xl font-bold text-gray-900 mb-4">Les Fondations</h3>
-						<p class="text-gray-600 leading-relaxed">
+						<CmsText key="chronologie.jalon3Date" label="Jalon 3 — date" class="inline-block px-4 py-1 bg-primary text-white text-sm font-bold rounded-full mb-4">2022-2024</CmsText>
+						<h3 class="text-2xl font-bold text-gray-900 mb-4">
+							<CmsText key="chronologie.jalon3Titre" label="Jalon 3 — titre">Les Fondations</CmsText>
+						</h3>
+						<CmsRichText key="chronologie.jalon3Texte" label="Jalon 3 — texte" class="cms-prose text-gray-600 leading-relaxed">
 							Sous la Présidence de <strong class="text-gray-900">Mme Awaou BACO</strong>, les bases de développement des activités de l'Amicale ont été posées à travers différentes initiatives impactantes au bénéfice des adhérentes et de certaines couches sociales de la population.
-						</p>
+						</CmsRichText>
 					</div>
 				</div>
 
@@ -183,11 +194,13 @@
 				<!-- Right Content -->
 				<div class="lg:w-1/2 lg:pl-16">
 					<div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow duration-300">
-						<span class="inline-block px-4 py-1 bg-secondary text-primary-dark text-sm font-bold rounded-full mb-4">2024 - Présent</span>
-						<h3 class="text-2xl font-bold text-gray-900 mb-4">Nouveau Leadership</h3>
-						<p class="text-gray-600 leading-relaxed">
+						<CmsText key="chronologie.jalon4Date" label="Jalon 4 — date" class="inline-block px-4 py-1 bg-secondary text-primary-dark text-sm font-bold rounded-full mb-4">2024 - Présent</CmsText>
+						<h3 class="text-2xl font-bold text-gray-900 mb-4">
+							<CmsText key="chronologie.jalon4Titre" label="Jalon 4 — titre">Nouveau Leadership</CmsText>
+						</h3>
+						<CmsRichText key="chronologie.jalon4Texte" label="Jalon 4 — texte" class="cms-prose text-gray-600 leading-relaxed">
 							Conformément aux dispositions des textes fondamentaux, Mme BACO a passé le flambeau à <strong class="text-gray-900">Mme Vicentia AKOTO OKRY</strong>, précédemment 1ère Vice-Présidente, pour conduire les destinées de l'organisation.
-						</p>
+						</CmsRichText>
 					</div>
 				</div>
 			</div>
@@ -199,9 +212,11 @@
 <section class="py-20 md:py-28 bg-white relative overflow-hidden">
 	<div class="container mx-auto px-4 max-w-[1300px]">
 		<div id="figures-header" data-animate class="text-center mb-16 {isVisible['figures-header'] ? 'animate-fade-in' : 'opacity-0'}">
-			<span class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Personnalités Clés</span>
-			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Les Figures Fondatrices</h2>
-			<p class="text-gray-600 text-lg max-w-2xl mx-auto">Les personnalités qui ont porté cette vision et contribué à la création de l'AFMEF</p>
+			<CmsText key="fondatrices.surTitre" label="Sur-titre" class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Personnalités Clés</CmsText>
+			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+				<CmsText key="fondatrices.titre" label="Titre de section">Les Figures Fondatrices</CmsText>
+			</h2>
+			<CmsText key="fondatrices.sousTitre" label="Sous-titre" tag="p" class="block text-gray-600 text-lg max-w-2xl mx-auto">Les personnalités qui ont porté cette vision et contribué à la création de l'AFMEF</CmsText>
 		</div>
 
 		<!-- Founding Leaders -->
@@ -213,7 +228,9 @@
 					<div class="absolute top-0 right-0 w-24 h-24 bg-secondary rounded-bl-[100px] z-10"></div>
 
 					<div class="aspect-[3/4] overflow-hidden">
-						<img
+						<CmsImage
+							key="fondatrices.figure1Photo"
+							label="Figure 1 — photo"
 							src="/images/wp/fondatrice-alice.jpg"
 							alt="Mme Alice MASSIM-OUALI AFFO"
 							class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
@@ -227,10 +244,12 @@
 					<div class="absolute bottom-0 left-0 right-0 p-6 text-white">
 						<div class="flex items-center gap-2 mb-2">
 							<div class="w-8 h-[2px] bg-secondary"></div>
-							<span class="text-secondary text-xs font-semibold uppercase tracking-wider">Leadership</span>
+							<CmsText key="fondatrices.figure1Badge" label="Figure 1 — étiquette" class="text-secondary text-xs font-semibold uppercase tracking-wider">Leadership</CmsText>
 						</div>
-						<h3 class="text-2xl font-bold mb-1">Mme Alice MASSIM-OUALI AFFO</h3>
-						<p class="text-white/80 text-sm">Présidente du Comité d'Organisation & du Présidium de l'Assemblée Générale Constitutive</p>
+						<h3 class="text-2xl font-bold mb-1">
+							<CmsText key="fondatrices.figure1Nom" label="Figure 1 — nom">Mme Alice MASSIM-OUALI AFFO</CmsText>
+						</h3>
+						<CmsText key="fondatrices.figure1Role" label="Figure 1 — fonction" tag="p" class="block text-white/80 text-sm">Présidente du Comité d'Organisation & du Présidium de l'Assemblée Générale Constitutive</CmsText>
 					</div>
 				</div>
 			</div>
@@ -242,7 +261,9 @@
 					<div class="absolute top-0 right-0 w-24 h-24 bg-primary rounded-bl-[100px] z-10"></div>
 
 					<div class="aspect-[3/4] overflow-hidden">
-						<img
+						<CmsImage
+							key="fondatrices.figure2Photo"
+							label="Figure 2 — photo"
 							src="/images/wp/fondateur-william.png"
 							alt="M. William TCHEPKE"
 							class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
@@ -256,10 +277,12 @@
 					<div class="absolute bottom-0 left-0 right-0 p-6 text-white">
 						<div class="flex items-center gap-2 mb-2">
 							<div class="w-8 h-[2px] bg-secondary"></div>
-							<span class="text-secondary text-xs font-semibold uppercase tracking-wider">Engagement</span>
+							<CmsText key="fondatrices.figure2Badge" label="Figure 2 — étiquette" class="text-secondary text-xs font-semibold uppercase tracking-wider">Engagement</CmsText>
 						</div>
-						<h3 class="text-2xl font-bold mb-1">M. William TCHEPKE</h3>
-						<p class="text-white/80 text-sm">Chargé d'études Communication et Relations Extérieures, Membre actif du Comité d'organisation</p>
+						<h3 class="text-2xl font-bold mb-1">
+							<CmsText key="fondatrices.figure2Nom" label="Figure 2 — nom">M. William TCHEPKE</CmsText>
+						</h3>
+						<CmsText key="fondatrices.figure2Role" label="Figure 2 — fonction" tag="p" class="block text-white/80 text-sm">Chargé d'études Communication et Relations Extérieures, Membre actif du Comité d'organisation</CmsText>
 					</div>
 				</div>
 			</div>
@@ -277,9 +300,11 @@
 
 	<div class="relative container mx-auto px-4 max-w-[1300px]">
 		<div id="presidents-header" data-animate class="text-center mb-16 {isVisible['presidents-header'] ? 'animate-fade-in' : 'opacity-0'}">
-			<span class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Leadership</span>
-			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Les Présidentes de l'AFMEF</h2>
-			<p class="text-gray-600 text-lg max-w-2xl mx-auto">Les femmes qui ont conduit et conduisent les destinées de notre amicale</p>
+			<CmsText key="presidentes.surTitre" label="Sur-titre" class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Leadership</CmsText>
+			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+				<CmsText key="presidentes.titre" label="Titre de section">Les Présidentes de l'AFMEF</CmsText>
+			</h2>
+			<CmsText key="presidentes.sousTitre" label="Sous-titre" tag="p" class="block text-gray-600 text-lg max-w-2xl mx-auto">Les femmes qui ont conduit et conduisent les destinées de notre amicale</CmsText>
 		</div>
 
 		<!-- Presidents Timeline -->
@@ -294,7 +319,9 @@
 						<!-- Image Container -->
 						<div class="relative">
 							<div class="aspect-[4/5] overflow-hidden">
-								<img
+								<CmsImage
+									key="presidentes.p1Photo"
+									label="Présidente 1 — photo"
 									src="/images/wp/presidente-awaou.png"
 									alt="Mme Awaou BACO"
 									class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
@@ -309,25 +336,27 @@
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 										<path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
 									</svg>
-									2022 - 2024
+									<CmsText key="presidentes.p1Mandat" label="Présidente 1 — mandat">2022 - 2024</CmsText>
 								</span>
 							</div>
 
 							<!-- Name overlay -->
 							<div class="absolute bottom-0 left-0 right-0 p-6 text-white">
-								<h3 class="text-2xl md:text-3xl font-bold mb-1">Mme Awaou BACO</h3>
-								<p class="text-white/80">1ère Présidente de l'AFMEF</p>
+								<h3 class="text-2xl md:text-3xl font-bold mb-1">
+									<CmsText key="presidentes.p1Nom" label="Présidente 1 — nom">Mme Awaou BACO</CmsText>
+								</h3>
+								<CmsText key="presidentes.p1Fonction" label="Présidente 1 — fonction" tag="p" class="block text-white/80">1ère Présidente de l'AFMEF</CmsText>
 							</div>
 						</div>
 
 						<!-- Content -->
 						<div class="p-6 bg-gradient-to-b from-white to-primary-bg/30">
-							<p class="text-gray-600 leading-relaxed mb-4">
+							<CmsText key="presidentes.p1Texte" label="Présidente 1 — texte" tag="p" class="block text-gray-600 leading-relaxed mb-4">
 								Sous sa présidence, les bases de développement des activités de l'Amicale ont été posées à travers différentes initiatives impactantes.
-							</p>
+							</CmsText>
 							<div class="flex items-center gap-2 text-primary font-semibold">
 								<span class="w-8 h-[2px] bg-primary"></span>
-								<span>Présidente Fondatrice</span>
+								<CmsText key="presidentes.p1Mention" label="Présidente 1 — mention">Présidente Fondatrice</CmsText>
 							</div>
 						</div>
 					</div>
@@ -339,7 +368,9 @@
 						<!-- Image Container -->
 						<div class="relative">
 							<div class="aspect-[4/5] overflow-hidden">
-								<img
+								<CmsImage
+									key="presidentes.p2Photo"
+									label="Présidente 2 — photo"
 									src="/images/wp/presidente-vicentia.png"
 									alt="Mme Vicentia AKOTO OKRY"
 									class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
@@ -354,25 +385,27 @@
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
 										<path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
 									</svg>
-									2024 - Présent
+									<CmsText key="presidentes.p2Mandat" label="Présidente 2 — mandat">2024 - Présent</CmsText>
 								</span>
 							</div>
 
 							<!-- Name overlay -->
 							<div class="absolute bottom-0 left-0 right-0 p-6 text-white">
-								<h3 class="text-2xl md:text-3xl font-bold mb-1">Mme Vicentia AKOTO OKRY</h3>
-								<p class="text-white/80">Présidente en exercice</p>
+								<h3 class="text-2xl md:text-3xl font-bold mb-1">
+									<CmsText key="presidentes.p2Nom" label="Présidente 2 — nom">Mme Vicentia AKOTO OKRY</CmsText>
+								</h3>
+								<CmsText key="presidentes.p2Fonction" label="Présidente 2 — fonction" tag="p" class="block text-white/80">Présidente en exercice</CmsText>
 							</div>
 						</div>
 
 						<!-- Content -->
 						<div class="p-6 bg-primary-dark/20">
-							<p class="text-white/90 leading-relaxed mb-4">
+							<CmsText key="presidentes.p2Texte" label="Présidente 2 — texte" tag="p" class="block text-white/90 leading-relaxed mb-4">
 								Précédemment 1ère Vice-Présidente, elle conduit désormais les destinées de l'AFMEF avec détermination et vision.
-							</p>
+							</CmsText>
 							<div class="flex items-center gap-2 text-secondary font-semibold">
 								<span class="w-8 h-[2px] bg-secondary"></span>
-								<span>Présidente en Exercice</span>
+								<CmsText key="presidentes.p2Mention" label="Présidente 2 — mention">Présidente en Exercice</CmsText>
 							</div>
 						</div>
 					</div>
@@ -395,11 +428,11 @@
 		<svg class="w-16 h-16 text-secondary/30 mx-auto mb-8" fill="currentColor" viewBox="0 0 24 24">
 			<path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
 		</svg>
-		<blockquote class="text-2xl md:text-3xl lg:text-4xl text-white font-light leading-relaxed mb-8">
+		<CmsRichText key="citation.texte" label="Citation" class="cms-prose text-2xl md:text-3xl lg:text-4xl text-white font-light leading-relaxed mb-8">
 			La participation massive des femmes du ministère en charge des finances venues de l'ensemble du territoire national est le
 			<span class="text-secondary font-semibold">signe manifeste du bien-fondé</span>
 			de la création de cette Amicale.
-		</blockquote>
+		</CmsRichText>
 	</div>
 </section>
 

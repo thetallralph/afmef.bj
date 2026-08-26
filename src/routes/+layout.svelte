@@ -3,8 +3,13 @@
 	import { page } from '$app/stores';
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import { provideCms } from '$lib/cms/context.js';
 
-	let { children } = $props();
+	let { data, children } = $props();
+
+	// Surcharges de contenu saisies dans /gestion/contenu, mises à disposition
+	// des composants Cms* de toutes les pages publiques.
+	provideCms(() => data.cms);
 
 	const HIDE_CHROME_PREFIXES = ['/gestion', '/guide'];
 	let hideChrome = $derived(

@@ -1,8 +1,10 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { createMember } from '$lib/services/auth.js';
+import { getPbAdmin } from '$lib/server/pb-admin.js';
 
 export const actions = {
-	default: async ({ request, locals }) => {
+	default: async ({ request }) => {
+		const pb = await getPbAdmin();
 		const formData = await request.formData();
 
 		const name = formData.get('name')?.toString().trim();
@@ -27,7 +29,7 @@ export const actions = {
 			});
 		}
 
-		const result = await createMember(locals.pb, {
+		const result = await createMember(pb, {
 			name,
 			email,
 			password,

@@ -6,6 +6,7 @@
 
 	const stats = $derived(data.stats);
 	const recentMembers = $derived(data.recentMembers);
+	const content = $derived(data.content);
 
 	const cards = $derived([
 		{
@@ -73,6 +74,29 @@
 	{/each}
 </div>
 
+<!-- Contenu du site -->
+<div class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-6">
+	<div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+		<h2 class="font-semibold text-gray-900">Contenu du site</h2>
+		<a href="/gestion/contenu/pages" class="text-sm text-primary hover:underline">
+			Textes &amp; images des pages
+		</a>
+	</div>
+	<div class="grid sm:grid-cols-2 lg:grid-cols-5 divide-y sm:divide-y-0 sm:divide-x divide-gray-100">
+		{#each content as section}
+			<a href="/gestion/contenu/{section.slug}" class="px-5 py-4 hover:bg-gray-50 transition-colors">
+				<p class="text-2xl font-bold text-gray-900">
+					{section.count ?? '—'}
+				</p>
+				<p class="text-sm text-gray-500 mt-0.5">{section.label}</p>
+				{#if section.count === null}
+					<p class="text-[11px] text-red-500 mt-1">Collection absente</p>
+				{/if}
+			</a>
+		{/each}
+	</div>
+</div>
+
 <!-- Quick actions + Recent members -->
 <div class="grid gap-6 lg:grid-cols-3">
 	<!-- Actions rapides -->
@@ -81,6 +105,12 @@
 		<div class="space-y-2">
 			<Button href="/gestion/membres/nouveau" variant="primary" class="w-full">
 				Ajouter un membre
+			</Button>
+			<Button href="/gestion/contenu/activites/nouveau" variant="secondary" class="w-full">
+				Publier une activité
+			</Button>
+			<Button href="/gestion/contenu/pages" variant="outline" class="w-full">
+				Modifier les textes du site
 			</Button>
 			<Button href="/gestion/cotisations" variant="outline" class="w-full">
 				Gérer les cotisations

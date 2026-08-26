@@ -1,8 +1,14 @@
 <script>
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import AboutNavLinks from '$lib/components/AboutNavLinks.svelte';
+	import { CmsText, CmsImage } from '$lib/components/cms/index.js';
+	import { useCms } from '$lib/cms/context.js';
 
 	let isVisible = $state({});
+
+	// Les photos remplacées depuis /gestion/contenu doivent primer sur celles du
+	// tableau ci-dessous, y compris pour les membres sans photo d'origine.
+	const cms = useCms();
 
 	const bureauExecutif = [
 		{ role: "Présidente", name: "AKOTO OKRY Vicentia", image: "/images/wp/equipe-presidente.jpg" },
@@ -65,24 +71,30 @@
 <section class="py-20 md:py-28 bg-white">
 	<div class="container mx-auto px-4 max-w-[1300px]">
 		<div id="be-header" data-animate class="text-center mb-16 {isVisible['be-header'] ? 'animate-fade-in' : 'opacity-0'}">
-			<span class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Leadership</span>
-			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">Bureau Exécutif</h2>
-			<p class="text-gray-600 mt-4 max-w-2xl mx-auto">17 membres élus pour un mandat de 2 ans</p>
+			<CmsText key="bureau.surTitre" label="Sur-titre" class="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">Leadership</CmsText>
+			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
+				<CmsText key="bureau.titre" label="Titre de section">Bureau Exécutif</CmsText>
+			</h2>
+			<CmsText key="bureau.sousTitre" label="Sous-titre" tag="p" class="block text-gray-600 mt-4 max-w-2xl mx-auto">17 membres élus pour un mandat de 2 ans</CmsText>
 		</div>
 
 		<!-- President Highlight -->
 		<div id="president" data-animate class="mb-16 {isVisible['president'] ? 'animate-fade-in' : 'opacity-0'}">
 			<div class="max-w-md mx-auto text-center">
 				<div class="relative overflow-hidden rounded-2xl mb-6 aspect-[3/4] max-w-xs mx-auto shadow-xl">
-					<img
+					<CmsImage
+						key="bureau.presidentePhoto"
+						label="Présidente — photo"
 						src={bureauExecutif[0].image}
 						alt={bureauExecutif[0].name}
 						class="w-full h-full object-cover"
 					/>
 					<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent"></div>
 					<div class="absolute bottom-0 left-0 right-0 p-6 text-white">
-						<p class="text-secondary font-semibold text-sm uppercase tracking-wider">{bureauExecutif[0].role}</p>
-						<h3 class="text-2xl font-bold">{bureauExecutif[0].name}</h3>
+						<CmsText key="bureau.presidenteRole" label="Présidente — fonction" tag="p" class="block text-secondary font-semibold text-sm uppercase tracking-wider">{bureauExecutif[0].role}</CmsText>
+						<h3 class="text-2xl font-bold">
+							<CmsText key="bureau.presidenteNom" label="Présidente — nom">{bureauExecutif[0].name}</CmsText>
+						</h3>
 					</div>
 				</div>
 			</div>
@@ -91,15 +103,20 @@
 		<!-- Other Members Grid -->
 		<div id="be-grid" data-animate class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 {isVisible['be-grid'] ? 'animate-fade-in' : 'opacity-0'}">
 			{#each bureauExecutif.slice(1) as member, i}
+				{@const photoKey = `bureau.membre${i + 2}Photo`}
 				<div class="group text-center" style="animation-delay: {i * 50}ms">
 					<div class="relative overflow-hidden rounded-xl mb-4 aspect-[3/4] bg-gray-100">
-						{#if member.image}
-							<img
-								src={member.image}
+						{#if cms.image[photoKey] || member.image}
+							<CmsImage
+								key={photoKey}
+								label="Membre {i + 2} — photo"
+								src={member.image ?? ''}
 								alt={member.name}
 								class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
 							/>
 						{:else}
+							<!-- Champ caché : permet d'ajouter une photo depuis /gestion/contenu -->
+							<CmsImage key={photoKey} label="Membre {i + 2} — photo" src="" alt="" class="hidden" />
 							<div class="w-full h-full flex items-center justify-center bg-primary/10">
 								<svg class="w-16 h-16 text-primary/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
@@ -107,8 +124,10 @@
 							</div>
 						{/if}
 					</div>
-					<p class="text-primary text-sm font-medium">{member.role}</p>
-					<h3 class="font-bold text-gray-900">{member.name}</h3>
+					<CmsText key="bureau.membre{i + 2}Role" label="Membre {i + 2} — fonction" tag="p" class="block text-primary text-sm font-medium">{member.role}</CmsText>
+					<h3 class="font-bold text-gray-900">
+						<CmsText key="bureau.membre{i + 2}Nom" label="Membre {i + 2} — nom">{member.name}</CmsText>
+					</h3>
 				</div>
 			{/each}
 		</div>
@@ -119,22 +138,29 @@
 <section class="py-20 md:py-28 bg-primary-bg">
 	<div class="container mx-auto px-4 max-w-[1300px]">
 		<div id="cac-header" data-animate class="text-center mb-16 {isVisible['cac-header'] ? 'animate-fade-in' : 'opacity-0'}">
-			<span class="text-red-600 text-sm font-semibold uppercase tracking-wider mb-4 block">Contrôle</span>
-			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">Commissariat aux Comptes</h2>
-			<p class="text-gray-600 mt-4 max-w-2xl mx-auto">3 commissaires chargées du contrôle de gestion</p>
+			<CmsText key="controle.surTitre" label="Sur-titre" class="text-red-600 text-sm font-semibold uppercase tracking-wider mb-4 block">Contrôle</CmsText>
+			<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
+				<CmsText key="controle.titre" label="Titre de section">Commissariat aux Comptes</CmsText>
+			</h2>
+			<CmsText key="controle.sousTitre" label="Sous-titre" tag="p" class="block text-gray-600 mt-4 max-w-2xl mx-auto">3 commissaires chargées du contrôle de gestion</CmsText>
 		</div>
 
 		<div id="cac-grid" data-animate class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto {isVisible['cac-grid'] ? 'animate-fade-in' : 'opacity-0'}">
 			{#each commissaires as member, i}
+				{@const photoKey = `controle.membre${i + 1}Photo`}
 				<div class="group text-center" style="animation-delay: {i * 100}ms">
 					<div class="relative overflow-hidden rounded-xl mb-4 aspect-[3/4] bg-gray-100">
-						{#if member.image}
-							<img
-								src={member.image}
+						{#if cms.image[photoKey] || member.image}
+							<CmsImage
+								key={photoKey}
+								label="Commissaire {i + 1} — photo"
+								src={member.image ?? ''}
 								alt={member.name}
 								class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
 							/>
 						{:else}
+							<!-- Champ caché : permet d'ajouter une photo depuis /gestion/contenu -->
+							<CmsImage key={photoKey} label="Commissaire {i + 1} — photo" src="" alt="" class="hidden" />
 							<div class="w-full h-full flex items-center justify-center bg-red-50">
 								<svg class="w-16 h-16 text-red-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
@@ -142,8 +168,10 @@
 							</div>
 						{/if}
 					</div>
-					<p class="text-red-600 text-sm font-medium">{member.role}</p>
-					<h3 class="font-bold text-gray-900">{member.name}</h3>
+					<CmsText key="controle.membre{i + 1}Role" label="Commissaire {i + 1} — fonction" tag="p" class="block text-red-600 text-sm font-medium">{member.role}</CmsText>
+					<h3 class="font-bold text-gray-900">
+						<CmsText key="controle.membre{i + 1}Nom" label="Commissaire {i + 1} — nom">{member.name}</CmsText>
+					</h3>
 				</div>
 			{/each}
 		</div>

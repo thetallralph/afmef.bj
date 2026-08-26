@@ -6,7 +6,7 @@
 	let activeSection = $state('introduction');
 	let showBackToTop = $state(false);
 
-	const lastUpdated = '21 avril 2026';
+	const lastUpdated = '26 août 2026';
 
 	const sections = [
 		{ id: 'introduction', title: 'Introduction' },
@@ -18,6 +18,7 @@
 		{ id: 'cotisations', title: 'Cotisations et paiement' },
 		{ id: 'public', title: 'Pages publiques' },
 		{ id: 'gestion', title: 'Espace Gestion (admin)' },
+		{ id: 'contenu', title: 'Contenu du site' },
 		{ id: 'pocketbase', title: 'PocketBase /admin' },
 		{ id: 'vigilance', title: 'Points de vigilance' },
 		{ id: 'support', title: 'Support technique' }
@@ -387,15 +388,50 @@
 									<li>historique complet par membre et par année</li>
 								</ul>
 							</div>
+							<div class="rounded-xl border border-gray-200 p-4">
+								<p class="font-semibold text-gray-900 mb-2">Contenu du site</p>
+								<p class="text-sm">Textes, images, actualités, ressources et documents se gèrent depuis le même espace — voir la section suivante.</p>
+							</div>
+						</div>
+					</section>
+
+					<section id="contenu" class="scroll-mt-24">
+						<h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+							10. Contenu du site
+						</h2>
+						<div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100 space-y-4 text-gray-700 leading-relaxed">
+							<p>
+								Tout le contenu éditorial se gère depuis <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded">/gestion</code>, sans passer par PocketBase.
+							</p>
+							<div class="rounded-xl border border-gray-200 p-4">
+								<p class="font-semibold text-gray-900 mb-2">Textes &amp; images — <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded">/gestion/contenu/pages</code></p>
+								<p class="text-sm mb-2">Un onglet par page publique. Chaque titre, paragraphe, libellé de bouton et image du site y est listé, regroupé par section.</p>
+								<ul class="list-disc list-inside space-y-1 text-sm pl-2">
+									<li>les <strong>textes</strong> se modifient puis s'enregistrent tous d'un coup avec « Enregistrer les textes »</li>
+									<li>les <strong>images</strong> s'envoient directement : l'enregistrement est immédiat</li>
+									<li>« Réinitialiser » (image) ou vider un champ texte rétablit la valeur d'origine du site</li>
+									<li>un champ non personnalisé affiche la valeur d'origine ; les champs modifiés portent la mention <em>personnalisé</em></li>
+								</ul>
+							</div>
+							<div class="rounded-xl border border-gray-200 p-4">
+								<p class="font-semibold text-gray-900 mb-2">Activités, ressources, catégories, documents, événements</p>
+								<ul class="list-disc list-inside space-y-1 text-sm pl-2">
+									<li><code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded">/gestion/contenu/activites</code> — actualités publiées sur la page d'accueil et <code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded">/activites</code> (titre, date, résumé, contenu enrichi, image, catégories)</li>
+									<li><code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded">/gestion/contenu/ressources</code> — documents PDF téléchargeables</li>
+									<li><code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded">/gestion/contenu/categories</code> — étiquettes de classement des activités</li>
+									<li><code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded">/gestion/contenu/documents</code> — fichiers réservés à l'espace membre</li>
+									<li><code class="text-xs bg-gray-100 px-1.5 py-0.5 rounded">/gestion/contenu/evenements</code> — événements de l'espace membre</li>
+								</ul>
+							</div>
 							<p class="text-sm text-gray-600">
-								La création des cotisations annuelles pour l'ensemble des membres se fait actuellement depuis l'admin PocketBase (pas d'action groupée dans l'UI).
+								L'<strong>identifiant dans l'URL</strong> (slug) est proposé automatiquement à partir du titre lors de la création. Une fois la page publiée et partagée, le modifier casse les liens existants.
 							</p>
 						</div>
 					</section>
 
 					<section id="pocketbase" class="scroll-mt-24">
 						<h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-							10. PocketBase /admin
+							11. PocketBase /admin
 						</h2>
 						<div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100 space-y-4 text-gray-700 leading-relaxed">
 							<p>
@@ -415,7 +451,7 @@
 
 					<section id="vigilance" class="scroll-mt-24">
 						<h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-							11. Points de vigilance
+							12. Points de vigilance
 						</h2>
 						<div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100 space-y-4 text-gray-700 leading-relaxed">
 							<ul class="space-y-3">
@@ -449,7 +485,7 @@
 
 					<section id="support" class="scroll-mt-24">
 						<h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-							12. Support technique
+							13. Support technique
 						</h2>
 						<div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100 space-y-4 text-gray-700 leading-relaxed">
 							<p>

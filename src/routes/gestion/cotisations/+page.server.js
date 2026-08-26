@@ -6,15 +6,17 @@ import {
 } from '$lib/services/auth.js';
 import { sendCotisationReminder } from '$lib/services/email.js';
 import { fail } from '@sveltejs/kit';
+import { getPbAdmin } from '$lib/server/pb-admin.js';
 
 const DEFAULT_AMOUNT = 10000;
 
-export async function load({ locals, url }) {
+export async function load({ url }) {
+	const pb = await getPbAdmin();
 	const page = parseInt(url.searchParams.get('page') || '1');
 	const year = url.searchParams.get('year') || '';
 	const status = url.searchParams.get('status') || '';
 
-	const { cotisations, total, totalPages } = await getAllCotisations(locals.pb, {
+	const { cotisations, total, totalPages } = await getAllCotisations(pb, {
 		perPage: 20,
 		page,
 		year,
@@ -22,7 +24,7 @@ export async function load({ locals, url }) {
 	});
 
 	// Tous les membres actifs pour le sélecteur du formulaire de création
-	const { members } = await getAllMembers(locals.pb, {
+	const { members } = await getAllMembers(pb, {
 		perPage: 500,
 		page: 1,
 		status: 'active',
@@ -45,13 +47,14 @@ export async function load({ locals, url }) {
 }
 
 export const actions = {
-	markPaid: async ({ request, locals }) => {
+	markPaid: async ({ request }) => {
+		const pb = await getPbAdmin();
 		const formData = await request.formData();
 		const id = formData.get('id');
 
 		if (!id) return fail(400, { error: 'ID manquant' });
 
-		const result = await updateCotisation(locals.pb, id, {
+		const result = await updateCotisation(pb, id, {
 			status: 'paid',
 			paidAt: new Date().toISOString()
 		});
@@ -60,7 +63,8 @@ export const actions = {
 		return { success: true, message: 'Cotisation marquée comme payée' };
 	},
 
-	create: async ({ request, locals }) => {
+	create: async ({ request }) => {
+		const pb = await getPbAdmin();
 		const formData = await request.formData();
 		const userId = formData.get('user')?.toString();
 		const year = parseInt(formData.get('year')?.toString() || '0', 10);
@@ -81,13 +85,14 @@ export const actions = {
 		if (method) payload.method = method;
 		if (markPaid) payload.paidAt = new Date().toISOString();
 
-		const result = await createCotisation(locals.pb, payload);
+		const result = await createCotisation(pb, payload);
 		if (!result.success) return fail(400, { error: result.error });
 
 		return { success: true, message: 'Cotisation créée' };
 	},
 
-	generateYear: async ({ request, locals }) => {
+	generateYear: async ({ request }) => {
+		const pb = await getPbAdmin();
 		const formData = await request.formData();
 		const year = parseInt(formData.get('year')?.toString() || '0', 10);
 		const amount = parseInt(formData.get('amount')?.toString() || String(DEFAULT_AMOUNT), 10);
@@ -95,10 +100,10 @@ export const actions = {
 		if (!year) return fail(400, { error: 'Année manquante' });
 
 		// Récupérer tous les membres actifs
-		const { members } = await getAllMembers(locals.pb, { perPage: 500, page: 1, status: 'active' });
+		const { members } = await getAllMembers(pb, { perPage: 500, page: 1, status: 'active' });
 
 		// Récupérer les cotisations existantes pour cette année
-		const existing = await locals.pb.collection('cotisations').getFullList({
+		const existing = await pb.collection('cotisations').getFullList({
 			filter: `year = ${year}`,
 			fields: 'user'
 		});
@@ -108,7 +113,7 @@ export const actions = {
 		let errors = 0;
 		for (const member of members) {
 			if (existingUserIds.has(member.id)) continue;
-			const result = await createCotisation(locals.pb, {
+			const result = await createCotisation(pb, {
 				user: member.id,
 				year,
 				amount,
@@ -124,12 +129,13 @@ export const actions = {
 		};
 	},
 
-	sendReminder: async ({ request, locals }) => {
+	sendReminder: async ({ request }) => {
+		const pb = await getPbAdmin();
 		const formData = await request.formData();
 		const id = formData.get('id')?.toString();
 		if (!id) return fail(400, { error: 'ID manquant' });
 
-		const cotisation = await locals.pb.collection('cotisations').getOne(id, { expand: 'user' });
+		const cotisation = await pb.collection('cotisations').getOne(id, { expand: 'user' });
 		const user = cotisation.expand?.user;
 		if (!user?.email) return fail(400, { error: 'Membre ou email introuvable' });
 
@@ -142,11 +148,12 @@ export const actions = {
 		return { success: true, message: `Rappel envoyé à ${user.email}` };
 	},
 
-	sendAllReminders: async ({ request, locals }) => {
+	sendAllReminders: async ({ request }) => {
+		const pb = await getPbAdmin();
 		const formData = await request.formData();
 		const year = parseInt(formData.get('year')?.toString() || String(new Date().getFullYear()), 10);
 
-		const cotisations = await locals.pb.collection('cotisations').getFullList({
+		const cotisations = await pb.collection('cotisations').getFullList({
 			filter: `year = ${year} && status = "pending"`,
 			expand: 'user'
 		});

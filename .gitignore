@@ -27,3 +27,6 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Fiche d'accès client (contient des mots de passe)
+docs/acces-admin-client.md
